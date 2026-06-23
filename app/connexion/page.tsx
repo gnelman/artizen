@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { envoyerCode, verifierCode } from "@/lib/auth";
 
 export default function Connexion() {
+    const router = useRouter();
   const [etape, setEtape] = useState<"numero" | "code">("numero");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
@@ -28,8 +30,15 @@ export default function Connexion() {
     setMessage("");
     const res = await verifierCode(phone, code);
     setEnCours(false);
-    if (res.ok) {
-      setMessage("✅ Connecté ! (compte créé / retrouvé)");
+   if (res.ok) {
+      // redirection selon le rôle
+      if (res.role === "ADMIN") {
+        router.push("/admin");
+      } else if (res.role === "ARTISAN") {
+        router.push("/pro");
+      } else {
+        router.push("/compte");
+      }
     } else {
       setMessage(res.message);
     }
