@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "./prisma";
+import { creerSession } from "./session";
 
 // Génère un code à 6 chiffres, le range en base, et (pour l'instant) le renvoie
 export async function envoyerCode(phone: string) {
@@ -55,6 +56,6 @@ export async function verifierCode(phone: string, code: string) {
 
   // on nettoie les codes utilisés pour ce numéro
   await prisma.codeVerif.deleteMany({ where: { phone: numero } });
-
+  await creerSession(user.id);
   return { ok: true, message: "Connecté", userId: user.id, role: user.role };
 }
