@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ===== UTILISATEURS =====
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique // numéro de téléphone (identifiant principal à Abidjan)
+  name      String
+  role      Role     @default(CLIENT) // CLIENT, ARTISAN ou ADMIN
+  createdAt DateTime @default(now())
+
+  // liens vers les autres tables
+  artisan        Artisan? // si l'utilisateur est un artizen
+  demandesClient Demande[] @relation("DemandesDuClient")
+}
+
+enum Role {
+  CLIENT
+  ARTISAN
+  ADMIN
+}
+
+// ===== ARTIZENS (profil métier) =====
+model Artisan {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  metiers    Metier[] // ses métiers (clim, plomberie...)
+  commune    String // zone d'intervention principale
+  verifie    Boolean  @default(false) // badge "Artizen Vérifié"
+  note       Float    @default(0) // moyenne des avis
+  nbAvis     Int      @default(0)
+  experience Int      @default(0) // années d'expérience
+  soldeKobo  Int      @default(0) // portefeuille, en FCFA (gains cumulés)
+  createdAt  DateTime @default(now())
+
+  demandes Demande[] @relation("DemandesDeLArtisan")
+}
+
+enum Metier {
+  CLIMATISATION
+  PLOMBERIE
+  ELECTRICITE
+  ELECTROMENAGER
+  PEINTURE
+}
+
+// ===== DEMANDES =====
+model Demande {
+  id          String        @id @default(cuid())
+  metier      Metier
+  description String
+  commune     String
+  adresse     String
+  statut      StatutDemande @default(EN_ATTENTE)
+  prixDevis   Int? // prix fixé par l'artizen (en FCFA), null tant que pas de devis
+  createdAt   DateTime      @default(now())
+
+  clientId String
+  client   User   @relation("DemandesDuClient", fields: [clientId], references: [id])
+
+  artisanId String?
+  artisan   Artisan? @relation("DemandesDeLArtisan", fields: [artisanId], references: [id])
+}
+
+enum StatutDemande {
+  EN_ATTENTE // créée, pas encore assignée/acceptée
+  ACCEPTEE // un artizen a accepté
+  EN_COURS // intervention en cours
+  TERMINEE // travail fini, en attente de paiement
+  PAYEE // payée
+  ANNULEE
+}
+
+// ===== CODES DE VÉRIFICATION (connexion par téléphone) =====
+model CodeVerif {
+  id        String   @id @default(cuid())
+  phone     String // le numéro qui demande à se connecter
+  code      String // le code à 6 chiffres
+  expiresAt DateTime // expire après quelques minutes
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}
