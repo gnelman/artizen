@@ -2,15 +2,23 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { envoyerCode, verifierCode } from "@/lib/auth";
+import { envoyerCode, verifierCode, enregistrerNom } from "@/lib/auth";
 
 export default function Connexion() {
-    const router = useRouter();
-  const [etape, setEtape] = useState<"numero" | "code">("numero");
+  const router = useRouter();
+  const [etape, setEtape] = useState<"numero" | "code" | "nom">("numero");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [nom, setNom] = useState("");
+  const [role, setRole] = useState("CLIENT");
   const [message, setMessage] = useState("");
   const [enCours, setEnCours] = useState(false);
+
+  function rediriger(r: string) {
+    if (r === "ADMIN") router.push("/admin");
+    else if (r === "ARTISAN") router.push("/pro");
+    else router.push("/compte");
+  }
 
   async function demanderCode() {
     setEnCours(true);
@@ -19,7 +27,6 @@ export default function Connexion() {
     setEnCours(false);
     if (res.ok) {
       setEtape("code");
-      setMessage("");
     } else {
       setMessage(res.message);
     }
@@ -30,44 +37,43 @@ export default function Connexion() {
     setMessage("");
     const res = await verifierCode(phone, code);
     setEnCours(false);
-   if (res.ok) {
-      // redirection selon le rôle
-      if (res.role === "ADMIN") {
-        router.push("/admin");
-      } else if (res.role === "ARTISAN") {
-        router.push("/pro");
+    if (res.ok) {
+      setRole(res.role ?? "CLIENT");
+      if (res.nouveau) {
+        // nouveau compte : on demande le nom
+        setEtape("nom");
       } else {
-        router.push("/compte");
+        rediriger(res.role ?? "CLIENT");
       }
     } else {
       setMessage(res.message);
     }
   }
 
+  async function validerNom() {
+    setEnCours(true);
+    setMessage("");
+    const res = await enregistrerNom(phone, nom);
+    setEnCours(false);
+    if (res.ok) {
+      rediriger(role);
+    } else {
+      setMessage(res.message);
+    }
+  }
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#F6F7F5",
-        fontFamily: "system-ui, sans-serif",
-        padding: "24px",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: "360px" }}>
-        <h1 style={{ fontSize: "40px", fontWeight: 800, color: "#0F6E72", margin: 0, letterSpacing: "-1px" }}>
-          artizen<span style={{ color: "#F5A623" }}>.</span>
+    <main className="min-h-screen bg-[#F6F7F5] flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-sm">
+        <h1 className="text-4xl font-extrabold text-[#0F6E72] tracking-tight">
+          artizen<span className="text-[#F5A623]">.</span>
         </h1>
 
-        {etape === "numero" ? (
+        {/* ÉTAPE 1 : NUMÉRO */}
+        {etape === "numero" && (
           <>
-            <p style={{ color: "#1A2A36", fontWeight: 600, marginTop: "8px", marginBottom: "28px" }}>
-              Connecte-toi pour continuer
-            </p>
-            <label style={{ display: "block", fontWeight: 700, fontSize: "14px", marginBottom: "8px", color: "#1A2A36" }}>
+            <p className="text-[#1A2A36] font-semibold mt-2 mb-7">Connecte-toi pour continuer</p>
+            <label className="block font-bold text-sm text-[#1A2A36] mb-2">
               Ton numéro de téléphone
             </label>
             <input
@@ -75,66 +81,74 @@ export default function Connexion() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Ex : 0707070707"
-              style={inputStyle}
+              className="w-full px-4 py-3.5 text-base rounded-xl border-[1.5px] border-[#E6EAE9] outline-none focus:border-[#0F6E72] mb-4"
             />
-            <button onClick={demanderCode} disabled={enCours} style={btnStyle}>
+            <button
+              onClick={demanderCode}
+              disabled={enCours}
+              className="w-full py-4 text-base font-bold text-white bg-[#0F6E72] rounded-xl active:scale-[0.99] transition-transform disabled:opacity-60"
+            >
               {enCours ? "Envoi..." : "Recevoir mon code"}
             </button>
           </>
-        ) : (
+        )}
+
+        {/* ÉTAPE 2 : CODE */}
+        {etape === "code" && (
           <>
-            <p style={{ color: "#1A2A36", fontWeight: 600, marginTop: "8px", marginBottom: "28px" }}>
+            <p className="text-[#1A2A36] font-semibold mt-2 mb-7">
               Entre le code reçu au {phone}
             </p>
-            <label style={{ display: "block", fontWeight: 700, fontSize: "14px", marginBottom: "8px", color: "#1A2A36" }}>
-              Code à 6 chiffres
-            </label>
+            <label className="block font-bold text-sm text-[#1A2A36] mb-2">Code à 6 chiffres</label>
             <input
               type="text"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="______"
               maxLength={6}
-              style={{ ...inputStyle, letterSpacing: "8px", textAlign: "center", fontSize: "22px", fontWeight: 700 }}
+              className="w-full px-4 py-3.5 rounded-xl border-[1.5px] border-[#E6EAE9] outline-none focus:border-[#0F6E72] mb-4 text-center text-2xl font-bold tracking-[8px]"
             />
-            <button onClick={validerCode} disabled={enCours} style={btnStyle}>
+            <button
+              onClick={validerCode}
+              disabled={enCours}
+              className="w-full py-4 text-base font-bold text-white bg-[#0F6E72] rounded-xl active:scale-[0.99] transition-transform disabled:opacity-60"
+            >
               {enCours ? "Vérification..." : "Valider"}
             </button>
             <button
               onClick={() => { setEtape("numero"); setCode(""); setMessage(""); }}
-              style={{ ...btnStyle, background: "transparent", color: "#0F6E72", marginTop: "8px" }}
+              className="w-full py-3 text-[#0F6E72] font-semibold mt-1"
             >
               ← Changer de numéro
             </button>
           </>
         )}
 
-        {message && (
-          <p style={{ marginTop: "16px", color: "#0F6E72", fontWeight: 600 }}>{message}</p>
+        {/* ÉTAPE 3 : NOM (nouveaux comptes seulement) */}
+        {etape === "nom" && (
+          <>
+            <p className="text-[#1A2A36] font-semibold mt-2 mb-1">Bienvenue sur Artizen 👋</p>
+            <p className="text-sm text-[#67767A] mb-7">Comment tu t&apos;appelles ?</p>
+            <label className="block font-bold text-sm text-[#1A2A36] mb-2">Ton nom</label>
+            <input
+              type="text"
+              value={nom}
+              onChange={(e) => setNom(e.target.value)}
+              placeholder="Ex : Sandra Koffi"
+              className="w-full px-4 py-3.5 text-base rounded-xl border-[1.5px] border-[#E6EAE9] outline-none focus:border-[#0F6E72] mb-4"
+            />
+            <button
+              onClick={validerNom}
+              disabled={enCours}
+              className="w-full py-4 text-base font-bold text-white bg-[#0F6E72] rounded-xl active:scale-[0.99] transition-transform disabled:opacity-60"
+            >
+              {enCours ? "..." : "C'est parti"}
+            </button>
+          </>
         )}
+
+        {message && <p className="mt-4 text-[#B5462F] font-semibold">{message}</p>}
       </div>
     </main>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "14px",
-  fontSize: "16px",
-  borderRadius: "12px",
-  border: "1.5px solid #E6EAE9",
-  outline: "none",
-  marginBottom: "16px",
-};
-
-const btnStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "15px",
-  fontSize: "16px",
-  fontWeight: 700,
-  color: "#fff",
-  background: "#0F6E72",
-  border: "none",
-  borderRadius: "12px",
-  cursor: "pointer",
-};

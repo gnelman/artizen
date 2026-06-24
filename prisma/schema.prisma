@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -15,14 +10,15 @@ datasource db {
 // ===== UTILISATEURS =====
 model User {
   id        String   @id @default(cuid())
-  phone     String   @unique          // numéro de téléphone (identifiant principal à Abidjan)
+  phone     String   @unique
   name      String
-  role      Role     @default(CLIENT) // CLIENT, ARTISAN ou ADMIN
+  role      Role     @default(CLIENT)
   createdAt DateTime @default(now())
 
-  // liens vers les autres tables
-  artisan        Artisan?   // si l'utilisateur est un artizen
-  demandesClient Demande[]  @relation("DemandesDuClient")
+  artisan        Artisan?
+  demandesClient Demande[]     @relation("DemandesDuClient")
+  avisDonnes     Avis[]
+  signalements   Signalement[]
 }
 
 enum Role {
@@ -33,20 +29,22 @@ enum Role {
 
 // ===== ARTIZENS (profil métier) =====
 model Artisan {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
 
-  metiers     Metier[]            // ses métiers (clim, plomberie...)
-  commune     String              // zone d'intervention principale
-  verifie     Boolean  @default(false)  // badge "Artizen Vérifié"
-  note        Float    @default(0)      // moyenne des avis
-  nbAvis      Int      @default(0)
-  experience  Int      @default(0)      // années d'expérience
-  soldeKobo   Int      @default(0)      // portefeuille, en FCFA (gains cumulés)
-  createdAt   DateTime @default(now())
+  metiers    Metier[]
+  commune    String
+  verifie    Boolean  @default(false)
+  note       Float    @default(0)
+  nbAvis     Int      @default(0)
+  experience Int      @default(0)
+  soldeKobo  Int      @default(0)
+  createdAt  DateTime @default(now())
 
-  demandes    Demande[]  @relation("DemandesDeLArtisan")
+  demandes          Demande[]     @relation("DemandesDeLArtisan")
+  avisRecus         Avis[]
+  signalementsRecus Signalement[]
 }
 
 enum Metier {
@@ -65,7 +63,7 @@ model Demande {
   commune     String
   adresse     String
   statut      StatutDemande @default(EN_ATTENTE)
-  prixDevis   Int?          // prix fixé par l'artizen (en FCFA), null tant que pas de devis
+  prixDevis   Int?
   createdAt   DateTime      @default(now())
 
   clientId    String
@@ -73,23 +71,75 @@ model Demande {
 
   artisanId   String?
   artisan     Artisan?      @relation("DemandesDeLArtisan", fields: [artisanId], references: [id])
+
+  avis        Avis?
+  signalement Signalement?
 }
 
 enum StatutDemande {
-  EN_ATTENTE   // créée, pas encore assignée/acceptée
-  ACCEPTEE     // un artizen a accepté
-  EN_COURS     // intervention en cours
-  TERMINEE     // travail fini, en attente de paiement
-  PAYEE        // payée
+  EN_ATTENTE
+  ACCEPTEE
+  EN_COURS
+  TERMINEE
+  CONFIRMEE
+  PAYEE
   ANNULEE
 }
 
-// ===== CODES DE VÉRIFICATION (connexion par téléphone) =====
+// ===== AVIS (notation client -> artisan) =====
+model Avis {
+  id         String   @id @default(cuid())
+  note       Int      // de 1 à 5
+  commentaire String  @default("")
+  createdAt  DateTime @default(now())
+
+  demandeId  String   @unique
+  demande    Demande  @relation(fields: [demandeId], references: [id])
+
+  artisanId  String
+  artisan    Artisan  @relation(fields: [artisanId], references: [id])
+
+  clientId   String
+  client     User     @relation(fields: [clientId], references: [id])
+}
+
+// ===== SIGNALEMENTS (client -> artisan, vu par l'admin) =====
+model Signalement {
+  id          String             @id @default(cuid())
+  motif       MotifSignalement
+  description String             @default("")
+  statut      StatutSignalement  @default(NOUVEAU)
+  createdAt   DateTime           @default(now())
+
+  demandeId   String?            @unique
+  demande     Demande?           @relation(fields: [demandeId], references: [id])
+
+  artisanId   String
+  artisan     Artisan            @relation(fields: [artisanId], references: [id])
+
+  clientId    String
+  client      User               @relation(fields: [clientId], references: [id])
+}
+
+enum MotifSignalement {
+  TRAVAIL_MAL_FAIT
+  PRIX_ABUSIF
+  COMPORTEMENT
+  ABSENT
+  AUTRE
+}
+
+enum StatutSignalement {
+  NOUVEAU
+  TRAITE
+}
+
+// ===== CODES DE VÉRIFICATION =====
 model CodeVerif {
   id        String   @id @default(cuid())
-  phone     String                       // le numéro qui demande à se connecter
-  code      String                       // le code à 6 chiffres
-  expiresAt DateTime                      // expire après quelques minutes
+  phone     String
+  code      String
+  expiresAt DateTime
   createdAt DateTime @default(now())
 
   @@index([phone])

@@ -29,6 +29,16 @@ export type Artisan = $Result.DefaultSelection<Prisma.$ArtisanPayload>
  */
 export type Demande = $Result.DefaultSelection<Prisma.$DemandePayload>
 /**
+ * Model Avis
+ * 
+ */
+export type Avis = $Result.DefaultSelection<Prisma.$AvisPayload>
+/**
+ * Model Signalement
+ * 
+ */
+export type Signalement = $Result.DefaultSelection<Prisma.$SignalementPayload>
+/**
  * Model CodeVerif
  * 
  */
@@ -63,11 +73,31 @@ export const StatutDemande: {
   ACCEPTEE: 'ACCEPTEE',
   EN_COURS: 'EN_COURS',
   TERMINEE: 'TERMINEE',
+  CONFIRMEE: 'CONFIRMEE',
   PAYEE: 'PAYEE',
   ANNULEE: 'ANNULEE'
 };
 
 export type StatutDemande = (typeof StatutDemande)[keyof typeof StatutDemande]
+
+
+export const MotifSignalement: {
+  TRAVAIL_MAL_FAIT: 'TRAVAIL_MAL_FAIT',
+  PRIX_ABUSIF: 'PRIX_ABUSIF',
+  COMPORTEMENT: 'COMPORTEMENT',
+  ABSENT: 'ABSENT',
+  AUTRE: 'AUTRE'
+};
+
+export type MotifSignalement = (typeof MotifSignalement)[keyof typeof MotifSignalement]
+
+
+export const StatutSignalement: {
+  NOUVEAU: 'NOUVEAU',
+  TRAITE: 'TRAITE'
+};
+
+export type StatutSignalement = (typeof StatutSignalement)[keyof typeof StatutSignalement]
 
 }
 
@@ -82,6 +112,14 @@ export const Metier: typeof $Enums.Metier
 export type StatutDemande = $Enums.StatutDemande
 
 export const StatutDemande: typeof $Enums.StatutDemande
+
+export type MotifSignalement = $Enums.MotifSignalement
+
+export const MotifSignalement: typeof $Enums.MotifSignalement
+
+export type StatutSignalement = $Enums.StatutSignalement
+
+export const StatutSignalement: typeof $Enums.StatutSignalement
 
 /**
  * ##  Prisma Client ʲˢ
@@ -233,6 +271,26 @@ export class PrismaClient<
     * ```
     */
   get demande(): Prisma.DemandeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.avis`: Exposes CRUD operations for the **Avis** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Avis
+    * const avis = await prisma.avis.findMany()
+    * ```
+    */
+  get avis(): Prisma.AvisDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.signalement`: Exposes CRUD operations for the **Signalement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Signalements
+    * const signalements = await prisma.signalement.findMany()
+    * ```
+    */
+  get signalement(): Prisma.SignalementDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.codeVerif`: Exposes CRUD operations for the **CodeVerif** model.
@@ -680,6 +738,8 @@ export namespace Prisma {
     User: 'User',
     Artisan: 'Artisan',
     Demande: 'Demande',
+    Avis: 'Avis',
+    Signalement: 'Signalement',
     CodeVerif: 'CodeVerif'
   };
 
@@ -696,7 +756,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "artisan" | "demande" | "codeVerif"
+      modelProps: "user" | "artisan" | "demande" | "avis" | "signalement" | "codeVerif"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -922,6 +982,154 @@ export namespace Prisma {
           }
         }
       }
+      Avis: {
+        payload: Prisma.$AvisPayload<ExtArgs>
+        fields: Prisma.AvisFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AvisFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AvisFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          findFirst: {
+            args: Prisma.AvisFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AvisFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          findMany: {
+            args: Prisma.AvisFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>[]
+          }
+          create: {
+            args: Prisma.AvisCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          createMany: {
+            args: Prisma.AvisCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AvisCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>[]
+          }
+          delete: {
+            args: Prisma.AvisDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          update: {
+            args: Prisma.AvisUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          deleteMany: {
+            args: Prisma.AvisDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AvisUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AvisUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>[]
+          }
+          upsert: {
+            args: Prisma.AvisUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvisPayload>
+          }
+          aggregate: {
+            args: Prisma.AvisAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAvis>
+          }
+          groupBy: {
+            args: Prisma.AvisGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AvisGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AvisCountArgs<ExtArgs>
+            result: $Utils.Optional<AvisCountAggregateOutputType> | number
+          }
+        }
+      }
+      Signalement: {
+        payload: Prisma.$SignalementPayload<ExtArgs>
+        fields: Prisma.SignalementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SignalementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SignalementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          findFirst: {
+            args: Prisma.SignalementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SignalementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          findMany: {
+            args: Prisma.SignalementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>[]
+          }
+          create: {
+            args: Prisma.SignalementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          createMany: {
+            args: Prisma.SignalementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SignalementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>[]
+          }
+          delete: {
+            args: Prisma.SignalementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          update: {
+            args: Prisma.SignalementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          deleteMany: {
+            args: Prisma.SignalementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SignalementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SignalementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>[]
+          }
+          upsert: {
+            args: Prisma.SignalementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignalementPayload>
+          }
+          aggregate: {
+            args: Prisma.SignalementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSignalement>
+          }
+          groupBy: {
+            args: Prisma.SignalementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SignalementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SignalementCountArgs<ExtArgs>
+            result: $Utils.Optional<SignalementCountAggregateOutputType> | number
+          }
+        }
+      }
       CodeVerif: {
         payload: Prisma.$CodeVerifPayload<ExtArgs>
         fields: Prisma.CodeVerifFieldRefs
@@ -1107,6 +1315,8 @@ export namespace Prisma {
     user?: UserOmit
     artisan?: ArtisanOmit
     demande?: DemandeOmit
+    avis?: AvisOmit
+    signalement?: SignalementOmit
     codeVerif?: CodeVerifOmit
   }
 
@@ -1189,10 +1399,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     demandesClient: number
+    avisDonnes: number
+    signalements: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     demandesClient?: boolean | UserCountOutputTypeCountDemandesClientArgs
+    avisDonnes?: boolean | UserCountOutputTypeCountAvisDonnesArgs
+    signalements?: boolean | UserCountOutputTypeCountSignalementsArgs
   }
 
   // Custom InputTypes
@@ -1213,6 +1427,20 @@ export namespace Prisma {
     where?: DemandeWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAvisDonnesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AvisWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSignalementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SignalementWhereInput
+  }
+
 
   /**
    * Count Type ArtisanCountOutputType
@@ -1220,10 +1448,14 @@ export namespace Prisma {
 
   export type ArtisanCountOutputType = {
     demandes: number
+    avisRecus: number
+    signalementsRecus: number
   }
 
   export type ArtisanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     demandes?: boolean | ArtisanCountOutputTypeCountDemandesArgs
+    avisRecus?: boolean | ArtisanCountOutputTypeCountAvisRecusArgs
+    signalementsRecus?: boolean | ArtisanCountOutputTypeCountSignalementsRecusArgs
   }
 
   // Custom InputTypes
@@ -1242,6 +1474,20 @@ export namespace Prisma {
    */
   export type ArtisanCountOutputTypeCountDemandesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DemandeWhereInput
+  }
+
+  /**
+   * ArtisanCountOutputType without action
+   */
+  export type ArtisanCountOutputTypeCountAvisRecusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AvisWhereInput
+  }
+
+  /**
+   * ArtisanCountOutputType without action
+   */
+  export type ArtisanCountOutputTypeCountSignalementsRecusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SignalementWhereInput
   }
 
 
@@ -1415,6 +1661,8 @@ export namespace Prisma {
     createdAt?: boolean
     artisan?: boolean | User$artisanArgs<ExtArgs>
     demandesClient?: boolean | User$demandesClientArgs<ExtArgs>
+    avisDonnes?: boolean | User$avisDonnesArgs<ExtArgs>
+    signalements?: boolean | User$signalementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1446,6 +1694,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     artisan?: boolean | User$artisanArgs<ExtArgs>
     demandesClient?: boolean | User$demandesClientArgs<ExtArgs>
+    avisDonnes?: boolean | User$avisDonnesArgs<ExtArgs>
+    signalements?: boolean | User$signalementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1456,6 +1706,8 @@ export namespace Prisma {
     objects: {
       artisan: Prisma.$ArtisanPayload<ExtArgs> | null
       demandesClient: Prisma.$DemandePayload<ExtArgs>[]
+      avisDonnes: Prisma.$AvisPayload<ExtArgs>[]
+      signalements: Prisma.$SignalementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1859,6 +2111,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     artisan<T extends User$artisanArgs<ExtArgs> = {}>(args?: Subset<T, User$artisanArgs<ExtArgs>>): Prisma__ArtisanClient<$Result.GetResult<Prisma.$ArtisanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     demandesClient<T extends User$demandesClientArgs<ExtArgs> = {}>(args?: Subset<T, User$demandesClientArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemandePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    avisDonnes<T extends User$avisDonnesArgs<ExtArgs> = {}>(args?: Subset<T, User$avisDonnesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    signalements<T extends User$signalementsArgs<ExtArgs> = {}>(args?: Subset<T, User$signalementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2329,6 +2583,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.avisDonnes
+   */
+  export type User$avisDonnesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    where?: AvisWhereInput
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    cursor?: AvisWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AvisScalarFieldEnum | AvisScalarFieldEnum[]
+  }
+
+  /**
+   * User.signalements
+   */
+  export type User$signalementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    where?: SignalementWhereInput
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    cursor?: SignalementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SignalementScalarFieldEnum | SignalementScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2595,6 +2897,8 @@ export namespace Prisma {
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     demandes?: boolean | Artisan$demandesArgs<ExtArgs>
+    avisRecus?: boolean | Artisan$avisRecusArgs<ExtArgs>
+    signalementsRecus?: boolean | Artisan$signalementsRecusArgs<ExtArgs>
     _count?: boolean | ArtisanCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["artisan"]>
 
@@ -2643,6 +2947,8 @@ export namespace Prisma {
   export type ArtisanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     demandes?: boolean | Artisan$demandesArgs<ExtArgs>
+    avisRecus?: boolean | Artisan$avisRecusArgs<ExtArgs>
+    signalementsRecus?: boolean | Artisan$signalementsRecusArgs<ExtArgs>
     _count?: boolean | ArtisanCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ArtisanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2657,6 +2963,8 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       demandes: Prisma.$DemandePayload<ExtArgs>[]
+      avisRecus: Prisma.$AvisPayload<ExtArgs>[]
+      signalementsRecus: Prisma.$SignalementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3065,6 +3373,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     demandes<T extends Artisan$demandesArgs<ExtArgs> = {}>(args?: Subset<T, Artisan$demandesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemandePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    avisRecus<T extends Artisan$avisRecusArgs<ExtArgs> = {}>(args?: Subset<T, Artisan$avisRecusArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    signalementsRecus<T extends Artisan$signalementsRecusArgs<ExtArgs> = {}>(args?: Subset<T, Artisan$signalementsRecusArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3529,6 +3839,54 @@ export namespace Prisma {
   }
 
   /**
+   * Artisan.avisRecus
+   */
+  export type Artisan$avisRecusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    where?: AvisWhereInput
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    cursor?: AvisWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AvisScalarFieldEnum | AvisScalarFieldEnum[]
+  }
+
+  /**
+   * Artisan.signalementsRecus
+   */
+  export type Artisan$signalementsRecusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    where?: SignalementWhereInput
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    cursor?: SignalementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SignalementScalarFieldEnum | SignalementScalarFieldEnum[]
+  }
+
+  /**
    * Artisan without action
    */
   export type ArtisanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3787,6 +4145,8 @@ export namespace Prisma {
     artisanId?: boolean
     client?: boolean | UserDefaultArgs<ExtArgs>
     artisan?: boolean | Demande$artisanArgs<ExtArgs>
+    avis?: boolean | Demande$avisArgs<ExtArgs>
+    signalement?: boolean | Demande$signalementArgs<ExtArgs>
   }, ExtArgs["result"]["demande"]>
 
   export type DemandeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3836,6 +4196,8 @@ export namespace Prisma {
   export type DemandeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | UserDefaultArgs<ExtArgs>
     artisan?: boolean | Demande$artisanArgs<ExtArgs>
+    avis?: boolean | Demande$avisArgs<ExtArgs>
+    signalement?: boolean | Demande$signalementArgs<ExtArgs>
   }
   export type DemandeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -3851,6 +4213,8 @@ export namespace Prisma {
     objects: {
       client: Prisma.$UserPayload<ExtArgs>
       artisan: Prisma.$ArtisanPayload<ExtArgs> | null
+      avis: Prisma.$AvisPayload<ExtArgs> | null
+      signalement: Prisma.$SignalementPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4259,6 +4623,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     artisan<T extends Demande$artisanArgs<ExtArgs> = {}>(args?: Subset<T, Demande$artisanArgs<ExtArgs>>): Prisma__ArtisanClient<$Result.GetResult<Prisma.$ArtisanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    avis<T extends Demande$avisArgs<ExtArgs> = {}>(args?: Subset<T, Demande$avisArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    signalement<T extends Demande$signalementArgs<ExtArgs> = {}>(args?: Subset<T, Demande$signalementArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4718,6 +5084,44 @@ export namespace Prisma {
   }
 
   /**
+   * Demande.avis
+   */
+  export type Demande$avisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    where?: AvisWhereInput
+  }
+
+  /**
+   * Demande.signalement
+   */
+  export type Demande$signalementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    where?: SignalementWhereInput
+  }
+
+  /**
    * Demande without action
    */
   export type DemandeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4733,6 +5137,2282 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DemandeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Avis
+   */
+
+  export type AggregateAvis = {
+    _count: AvisCountAggregateOutputType | null
+    _avg: AvisAvgAggregateOutputType | null
+    _sum: AvisSumAggregateOutputType | null
+    _min: AvisMinAggregateOutputType | null
+    _max: AvisMaxAggregateOutputType | null
+  }
+
+  export type AvisAvgAggregateOutputType = {
+    note: number | null
+  }
+
+  export type AvisSumAggregateOutputType = {
+    note: number | null
+  }
+
+  export type AvisMinAggregateOutputType = {
+    id: string | null
+    note: number | null
+    commentaire: string | null
+    createdAt: Date | null
+    demandeId: string | null
+    artisanId: string | null
+    clientId: string | null
+  }
+
+  export type AvisMaxAggregateOutputType = {
+    id: string | null
+    note: number | null
+    commentaire: string | null
+    createdAt: Date | null
+    demandeId: string | null
+    artisanId: string | null
+    clientId: string | null
+  }
+
+  export type AvisCountAggregateOutputType = {
+    id: number
+    note: number
+    commentaire: number
+    createdAt: number
+    demandeId: number
+    artisanId: number
+    clientId: number
+    _all: number
+  }
+
+
+  export type AvisAvgAggregateInputType = {
+    note?: true
+  }
+
+  export type AvisSumAggregateInputType = {
+    note?: true
+  }
+
+  export type AvisMinAggregateInputType = {
+    id?: true
+    note?: true
+    commentaire?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+  }
+
+  export type AvisMaxAggregateInputType = {
+    id?: true
+    note?: true
+    commentaire?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+  }
+
+  export type AvisCountAggregateInputType = {
+    id?: true
+    note?: true
+    commentaire?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+    _all?: true
+  }
+
+  export type AvisAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Avis to aggregate.
+     */
+    where?: AvisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Avis to fetch.
+     */
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AvisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Avis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Avis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Avis
+    **/
+    _count?: true | AvisCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AvisAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AvisSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AvisMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AvisMaxAggregateInputType
+  }
+
+  export type GetAvisAggregateType<T extends AvisAggregateArgs> = {
+        [P in keyof T & keyof AggregateAvis]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAvis[P]>
+      : GetScalarType<T[P], AggregateAvis[P]>
+  }
+
+
+
+
+  export type AvisGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AvisWhereInput
+    orderBy?: AvisOrderByWithAggregationInput | AvisOrderByWithAggregationInput[]
+    by: AvisScalarFieldEnum[] | AvisScalarFieldEnum
+    having?: AvisScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AvisCountAggregateInputType | true
+    _avg?: AvisAvgAggregateInputType
+    _sum?: AvisSumAggregateInputType
+    _min?: AvisMinAggregateInputType
+    _max?: AvisMaxAggregateInputType
+  }
+
+  export type AvisGroupByOutputType = {
+    id: string
+    note: number
+    commentaire: string
+    createdAt: Date
+    demandeId: string
+    artisanId: string
+    clientId: string
+    _count: AvisCountAggregateOutputType | null
+    _avg: AvisAvgAggregateOutputType | null
+    _sum: AvisSumAggregateOutputType | null
+    _min: AvisMinAggregateOutputType | null
+    _max: AvisMaxAggregateOutputType | null
+  }
+
+  type GetAvisGroupByPayload<T extends AvisGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AvisGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AvisGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AvisGroupByOutputType[P]>
+            : GetScalarType<T[P], AvisGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AvisSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    note?: boolean
+    commentaire?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["avis"]>
+
+  export type AvisSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    note?: boolean
+    commentaire?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["avis"]>
+
+  export type AvisSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    note?: boolean
+    commentaire?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["avis"]>
+
+  export type AvisSelectScalar = {
+    id?: boolean
+    note?: boolean
+    commentaire?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+  }
+
+  export type AvisOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "note" | "commentaire" | "createdAt" | "demandeId" | "artisanId" | "clientId", ExtArgs["result"]["avis"]>
+  export type AvisInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AvisIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AvisIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | DemandeDefaultArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AvisPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Avis"
+    objects: {
+      demande: Prisma.$DemandePayload<ExtArgs>
+      artisan: Prisma.$ArtisanPayload<ExtArgs>
+      client: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      note: number
+      commentaire: string
+      createdAt: Date
+      demandeId: string
+      artisanId: string
+      clientId: string
+    }, ExtArgs["result"]["avis"]>
+    composites: {}
+  }
+
+  type AvisGetPayload<S extends boolean | null | undefined | AvisDefaultArgs> = $Result.GetResult<Prisma.$AvisPayload, S>
+
+  type AvisCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AvisFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AvisCountAggregateInputType | true
+    }
+
+  export interface AvisDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Avis'], meta: { name: 'Avis' } }
+    /**
+     * Find zero or one Avis that matches the filter.
+     * @param {AvisFindUniqueArgs} args - Arguments to find a Avis
+     * @example
+     * // Get one Avis
+     * const avis = await prisma.avis.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AvisFindUniqueArgs>(args: SelectSubset<T, AvisFindUniqueArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Avis that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AvisFindUniqueOrThrowArgs} args - Arguments to find a Avis
+     * @example
+     * // Get one Avis
+     * const avis = await prisma.avis.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AvisFindUniqueOrThrowArgs>(args: SelectSubset<T, AvisFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Avis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisFindFirstArgs} args - Arguments to find a Avis
+     * @example
+     * // Get one Avis
+     * const avis = await prisma.avis.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AvisFindFirstArgs>(args?: SelectSubset<T, AvisFindFirstArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Avis that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisFindFirstOrThrowArgs} args - Arguments to find a Avis
+     * @example
+     * // Get one Avis
+     * const avis = await prisma.avis.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AvisFindFirstOrThrowArgs>(args?: SelectSubset<T, AvisFindFirstOrThrowArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Avis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Avis
+     * const avis = await prisma.avis.findMany()
+     * 
+     * // Get first 10 Avis
+     * const avis = await prisma.avis.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const avisWithIdOnly = await prisma.avis.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AvisFindManyArgs>(args?: SelectSubset<T, AvisFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Avis.
+     * @param {AvisCreateArgs} args - Arguments to create a Avis.
+     * @example
+     * // Create one Avis
+     * const Avis = await prisma.avis.create({
+     *   data: {
+     *     // ... data to create a Avis
+     *   }
+     * })
+     * 
+     */
+    create<T extends AvisCreateArgs>(args: SelectSubset<T, AvisCreateArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Avis.
+     * @param {AvisCreateManyArgs} args - Arguments to create many Avis.
+     * @example
+     * // Create many Avis
+     * const avis = await prisma.avis.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AvisCreateManyArgs>(args?: SelectSubset<T, AvisCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Avis and returns the data saved in the database.
+     * @param {AvisCreateManyAndReturnArgs} args - Arguments to create many Avis.
+     * @example
+     * // Create many Avis
+     * const avis = await prisma.avis.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Avis and only return the `id`
+     * const avisWithIdOnly = await prisma.avis.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AvisCreateManyAndReturnArgs>(args?: SelectSubset<T, AvisCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Avis.
+     * @param {AvisDeleteArgs} args - Arguments to delete one Avis.
+     * @example
+     * // Delete one Avis
+     * const Avis = await prisma.avis.delete({
+     *   where: {
+     *     // ... filter to delete one Avis
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AvisDeleteArgs>(args: SelectSubset<T, AvisDeleteArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Avis.
+     * @param {AvisUpdateArgs} args - Arguments to update one Avis.
+     * @example
+     * // Update one Avis
+     * const avis = await prisma.avis.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AvisUpdateArgs>(args: SelectSubset<T, AvisUpdateArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Avis.
+     * @param {AvisDeleteManyArgs} args - Arguments to filter Avis to delete.
+     * @example
+     * // Delete a few Avis
+     * const { count } = await prisma.avis.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AvisDeleteManyArgs>(args?: SelectSubset<T, AvisDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Avis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Avis
+     * const avis = await prisma.avis.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AvisUpdateManyArgs>(args: SelectSubset<T, AvisUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Avis and returns the data updated in the database.
+     * @param {AvisUpdateManyAndReturnArgs} args - Arguments to update many Avis.
+     * @example
+     * // Update many Avis
+     * const avis = await prisma.avis.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Avis and only return the `id`
+     * const avisWithIdOnly = await prisma.avis.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AvisUpdateManyAndReturnArgs>(args: SelectSubset<T, AvisUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Avis.
+     * @param {AvisUpsertArgs} args - Arguments to update or create a Avis.
+     * @example
+     * // Update or create a Avis
+     * const avis = await prisma.avis.upsert({
+     *   create: {
+     *     // ... data to create a Avis
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Avis we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AvisUpsertArgs>(args: SelectSubset<T, AvisUpsertArgs<ExtArgs>>): Prisma__AvisClient<$Result.GetResult<Prisma.$AvisPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Avis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisCountArgs} args - Arguments to filter Avis to count.
+     * @example
+     * // Count the number of Avis
+     * const count = await prisma.avis.count({
+     *   where: {
+     *     // ... the filter for the Avis we want to count
+     *   }
+     * })
+    **/
+    count<T extends AvisCountArgs>(
+      args?: Subset<T, AvisCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AvisCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Avis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AvisAggregateArgs>(args: Subset<T, AvisAggregateArgs>): Prisma.PrismaPromise<GetAvisAggregateType<T>>
+
+    /**
+     * Group by Avis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvisGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AvisGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AvisGroupByArgs['orderBy'] }
+        : { orderBy?: AvisGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AvisGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAvisGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Avis model
+   */
+  readonly fields: AvisFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Avis.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AvisClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    demande<T extends DemandeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DemandeDefaultArgs<ExtArgs>>): Prisma__DemandeClient<$Result.GetResult<Prisma.$DemandePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    artisan<T extends ArtisanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArtisanDefaultArgs<ExtArgs>>): Prisma__ArtisanClient<$Result.GetResult<Prisma.$ArtisanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Avis model
+   */
+  interface AvisFieldRefs {
+    readonly id: FieldRef<"Avis", 'String'>
+    readonly note: FieldRef<"Avis", 'Int'>
+    readonly commentaire: FieldRef<"Avis", 'String'>
+    readonly createdAt: FieldRef<"Avis", 'DateTime'>
+    readonly demandeId: FieldRef<"Avis", 'String'>
+    readonly artisanId: FieldRef<"Avis", 'String'>
+    readonly clientId: FieldRef<"Avis", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Avis findUnique
+   */
+  export type AvisFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter, which Avis to fetch.
+     */
+    where: AvisWhereUniqueInput
+  }
+
+  /**
+   * Avis findUniqueOrThrow
+   */
+  export type AvisFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter, which Avis to fetch.
+     */
+    where: AvisWhereUniqueInput
+  }
+
+  /**
+   * Avis findFirst
+   */
+  export type AvisFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter, which Avis to fetch.
+     */
+    where?: AvisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Avis to fetch.
+     */
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Avis.
+     */
+    cursor?: AvisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Avis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Avis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Avis.
+     */
+    distinct?: AvisScalarFieldEnum | AvisScalarFieldEnum[]
+  }
+
+  /**
+   * Avis findFirstOrThrow
+   */
+  export type AvisFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter, which Avis to fetch.
+     */
+    where?: AvisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Avis to fetch.
+     */
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Avis.
+     */
+    cursor?: AvisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Avis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Avis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Avis.
+     */
+    distinct?: AvisScalarFieldEnum | AvisScalarFieldEnum[]
+  }
+
+  /**
+   * Avis findMany
+   */
+  export type AvisFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter, which Avis to fetch.
+     */
+    where?: AvisWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Avis to fetch.
+     */
+    orderBy?: AvisOrderByWithRelationInput | AvisOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Avis.
+     */
+    cursor?: AvisWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Avis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Avis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Avis.
+     */
+    distinct?: AvisScalarFieldEnum | AvisScalarFieldEnum[]
+  }
+
+  /**
+   * Avis create
+   */
+  export type AvisCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Avis.
+     */
+    data: XOR<AvisCreateInput, AvisUncheckedCreateInput>
+  }
+
+  /**
+   * Avis createMany
+   */
+  export type AvisCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Avis.
+     */
+    data: AvisCreateManyInput | AvisCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Avis createManyAndReturn
+   */
+  export type AvisCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * The data used to create many Avis.
+     */
+    data: AvisCreateManyInput | AvisCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Avis update
+   */
+  export type AvisUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Avis.
+     */
+    data: XOR<AvisUpdateInput, AvisUncheckedUpdateInput>
+    /**
+     * Choose, which Avis to update.
+     */
+    where: AvisWhereUniqueInput
+  }
+
+  /**
+   * Avis updateMany
+   */
+  export type AvisUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Avis.
+     */
+    data: XOR<AvisUpdateManyMutationInput, AvisUncheckedUpdateManyInput>
+    /**
+     * Filter which Avis to update
+     */
+    where?: AvisWhereInput
+    /**
+     * Limit how many Avis to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Avis updateManyAndReturn
+   */
+  export type AvisUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * The data used to update Avis.
+     */
+    data: XOR<AvisUpdateManyMutationInput, AvisUncheckedUpdateManyInput>
+    /**
+     * Filter which Avis to update
+     */
+    where?: AvisWhereInput
+    /**
+     * Limit how many Avis to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Avis upsert
+   */
+  export type AvisUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Avis to update in case it exists.
+     */
+    where: AvisWhereUniqueInput
+    /**
+     * In case the Avis found by the `where` argument doesn't exist, create a new Avis with this data.
+     */
+    create: XOR<AvisCreateInput, AvisUncheckedCreateInput>
+    /**
+     * In case the Avis was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AvisUpdateInput, AvisUncheckedUpdateInput>
+  }
+
+  /**
+   * Avis delete
+   */
+  export type AvisDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+    /**
+     * Filter which Avis to delete.
+     */
+    where: AvisWhereUniqueInput
+  }
+
+  /**
+   * Avis deleteMany
+   */
+  export type AvisDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Avis to delete
+     */
+    where?: AvisWhereInput
+    /**
+     * Limit how many Avis to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Avis without action
+   */
+  export type AvisDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Avis
+     */
+    select?: AvisSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Avis
+     */
+    omit?: AvisOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvisInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Signalement
+   */
+
+  export type AggregateSignalement = {
+    _count: SignalementCountAggregateOutputType | null
+    _min: SignalementMinAggregateOutputType | null
+    _max: SignalementMaxAggregateOutputType | null
+  }
+
+  export type SignalementMinAggregateOutputType = {
+    id: string | null
+    motif: $Enums.MotifSignalement | null
+    description: string | null
+    statut: $Enums.StatutSignalement | null
+    createdAt: Date | null
+    demandeId: string | null
+    artisanId: string | null
+    clientId: string | null
+  }
+
+  export type SignalementMaxAggregateOutputType = {
+    id: string | null
+    motif: $Enums.MotifSignalement | null
+    description: string | null
+    statut: $Enums.StatutSignalement | null
+    createdAt: Date | null
+    demandeId: string | null
+    artisanId: string | null
+    clientId: string | null
+  }
+
+  export type SignalementCountAggregateOutputType = {
+    id: number
+    motif: number
+    description: number
+    statut: number
+    createdAt: number
+    demandeId: number
+    artisanId: number
+    clientId: number
+    _all: number
+  }
+
+
+  export type SignalementMinAggregateInputType = {
+    id?: true
+    motif?: true
+    description?: true
+    statut?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+  }
+
+  export type SignalementMaxAggregateInputType = {
+    id?: true
+    motif?: true
+    description?: true
+    statut?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+  }
+
+  export type SignalementCountAggregateInputType = {
+    id?: true
+    motif?: true
+    description?: true
+    statut?: true
+    createdAt?: true
+    demandeId?: true
+    artisanId?: true
+    clientId?: true
+    _all?: true
+  }
+
+  export type SignalementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Signalement to aggregate.
+     */
+    where?: SignalementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Signalements to fetch.
+     */
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SignalementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Signalements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Signalements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Signalements
+    **/
+    _count?: true | SignalementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SignalementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SignalementMaxAggregateInputType
+  }
+
+  export type GetSignalementAggregateType<T extends SignalementAggregateArgs> = {
+        [P in keyof T & keyof AggregateSignalement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSignalement[P]>
+      : GetScalarType<T[P], AggregateSignalement[P]>
+  }
+
+
+
+
+  export type SignalementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SignalementWhereInput
+    orderBy?: SignalementOrderByWithAggregationInput | SignalementOrderByWithAggregationInput[]
+    by: SignalementScalarFieldEnum[] | SignalementScalarFieldEnum
+    having?: SignalementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SignalementCountAggregateInputType | true
+    _min?: SignalementMinAggregateInputType
+    _max?: SignalementMaxAggregateInputType
+  }
+
+  export type SignalementGroupByOutputType = {
+    id: string
+    motif: $Enums.MotifSignalement
+    description: string
+    statut: $Enums.StatutSignalement
+    createdAt: Date
+    demandeId: string | null
+    artisanId: string
+    clientId: string
+    _count: SignalementCountAggregateOutputType | null
+    _min: SignalementMinAggregateOutputType | null
+    _max: SignalementMaxAggregateOutputType | null
+  }
+
+  type GetSignalementGroupByPayload<T extends SignalementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SignalementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SignalementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SignalementGroupByOutputType[P]>
+            : GetScalarType<T[P], SignalementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SignalementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    motif?: boolean
+    description?: boolean
+    statut?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["signalement"]>
+
+  export type SignalementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    motif?: boolean
+    description?: boolean
+    statut?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["signalement"]>
+
+  export type SignalementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    motif?: boolean
+    description?: boolean
+    statut?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["signalement"]>
+
+  export type SignalementSelectScalar = {
+    id?: boolean
+    motif?: boolean
+    description?: boolean
+    statut?: boolean
+    createdAt?: boolean
+    demandeId?: boolean
+    artisanId?: boolean
+    clientId?: boolean
+  }
+
+  export type SignalementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "motif" | "description" | "statut" | "createdAt" | "demandeId" | "artisanId" | "clientId", ExtArgs["result"]["signalement"]>
+  export type SignalementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SignalementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SignalementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    demande?: boolean | Signalement$demandeArgs<ExtArgs>
+    artisan?: boolean | ArtisanDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SignalementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Signalement"
+    objects: {
+      demande: Prisma.$DemandePayload<ExtArgs> | null
+      artisan: Prisma.$ArtisanPayload<ExtArgs>
+      client: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      motif: $Enums.MotifSignalement
+      description: string
+      statut: $Enums.StatutSignalement
+      createdAt: Date
+      demandeId: string | null
+      artisanId: string
+      clientId: string
+    }, ExtArgs["result"]["signalement"]>
+    composites: {}
+  }
+
+  type SignalementGetPayload<S extends boolean | null | undefined | SignalementDefaultArgs> = $Result.GetResult<Prisma.$SignalementPayload, S>
+
+  type SignalementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SignalementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SignalementCountAggregateInputType | true
+    }
+
+  export interface SignalementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Signalement'], meta: { name: 'Signalement' } }
+    /**
+     * Find zero or one Signalement that matches the filter.
+     * @param {SignalementFindUniqueArgs} args - Arguments to find a Signalement
+     * @example
+     * // Get one Signalement
+     * const signalement = await prisma.signalement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SignalementFindUniqueArgs>(args: SelectSubset<T, SignalementFindUniqueArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Signalement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SignalementFindUniqueOrThrowArgs} args - Arguments to find a Signalement
+     * @example
+     * // Get one Signalement
+     * const signalement = await prisma.signalement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SignalementFindUniqueOrThrowArgs>(args: SelectSubset<T, SignalementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Signalement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementFindFirstArgs} args - Arguments to find a Signalement
+     * @example
+     * // Get one Signalement
+     * const signalement = await prisma.signalement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SignalementFindFirstArgs>(args?: SelectSubset<T, SignalementFindFirstArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Signalement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementFindFirstOrThrowArgs} args - Arguments to find a Signalement
+     * @example
+     * // Get one Signalement
+     * const signalement = await prisma.signalement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SignalementFindFirstOrThrowArgs>(args?: SelectSubset<T, SignalementFindFirstOrThrowArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Signalements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Signalements
+     * const signalements = await prisma.signalement.findMany()
+     * 
+     * // Get first 10 Signalements
+     * const signalements = await prisma.signalement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const signalementWithIdOnly = await prisma.signalement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SignalementFindManyArgs>(args?: SelectSubset<T, SignalementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Signalement.
+     * @param {SignalementCreateArgs} args - Arguments to create a Signalement.
+     * @example
+     * // Create one Signalement
+     * const Signalement = await prisma.signalement.create({
+     *   data: {
+     *     // ... data to create a Signalement
+     *   }
+     * })
+     * 
+     */
+    create<T extends SignalementCreateArgs>(args: SelectSubset<T, SignalementCreateArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Signalements.
+     * @param {SignalementCreateManyArgs} args - Arguments to create many Signalements.
+     * @example
+     * // Create many Signalements
+     * const signalement = await prisma.signalement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SignalementCreateManyArgs>(args?: SelectSubset<T, SignalementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Signalements and returns the data saved in the database.
+     * @param {SignalementCreateManyAndReturnArgs} args - Arguments to create many Signalements.
+     * @example
+     * // Create many Signalements
+     * const signalement = await prisma.signalement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Signalements and only return the `id`
+     * const signalementWithIdOnly = await prisma.signalement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SignalementCreateManyAndReturnArgs>(args?: SelectSubset<T, SignalementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Signalement.
+     * @param {SignalementDeleteArgs} args - Arguments to delete one Signalement.
+     * @example
+     * // Delete one Signalement
+     * const Signalement = await prisma.signalement.delete({
+     *   where: {
+     *     // ... filter to delete one Signalement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SignalementDeleteArgs>(args: SelectSubset<T, SignalementDeleteArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Signalement.
+     * @param {SignalementUpdateArgs} args - Arguments to update one Signalement.
+     * @example
+     * // Update one Signalement
+     * const signalement = await prisma.signalement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SignalementUpdateArgs>(args: SelectSubset<T, SignalementUpdateArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Signalements.
+     * @param {SignalementDeleteManyArgs} args - Arguments to filter Signalements to delete.
+     * @example
+     * // Delete a few Signalements
+     * const { count } = await prisma.signalement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SignalementDeleteManyArgs>(args?: SelectSubset<T, SignalementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Signalements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Signalements
+     * const signalement = await prisma.signalement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SignalementUpdateManyArgs>(args: SelectSubset<T, SignalementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Signalements and returns the data updated in the database.
+     * @param {SignalementUpdateManyAndReturnArgs} args - Arguments to update many Signalements.
+     * @example
+     * // Update many Signalements
+     * const signalement = await prisma.signalement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Signalements and only return the `id`
+     * const signalementWithIdOnly = await prisma.signalement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SignalementUpdateManyAndReturnArgs>(args: SelectSubset<T, SignalementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Signalement.
+     * @param {SignalementUpsertArgs} args - Arguments to update or create a Signalement.
+     * @example
+     * // Update or create a Signalement
+     * const signalement = await prisma.signalement.upsert({
+     *   create: {
+     *     // ... data to create a Signalement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Signalement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SignalementUpsertArgs>(args: SelectSubset<T, SignalementUpsertArgs<ExtArgs>>): Prisma__SignalementClient<$Result.GetResult<Prisma.$SignalementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Signalements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementCountArgs} args - Arguments to filter Signalements to count.
+     * @example
+     * // Count the number of Signalements
+     * const count = await prisma.signalement.count({
+     *   where: {
+     *     // ... the filter for the Signalements we want to count
+     *   }
+     * })
+    **/
+    count<T extends SignalementCountArgs>(
+      args?: Subset<T, SignalementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SignalementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Signalement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SignalementAggregateArgs>(args: Subset<T, SignalementAggregateArgs>): Prisma.PrismaPromise<GetSignalementAggregateType<T>>
+
+    /**
+     * Group by Signalement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignalementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SignalementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SignalementGroupByArgs['orderBy'] }
+        : { orderBy?: SignalementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SignalementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSignalementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Signalement model
+   */
+  readonly fields: SignalementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Signalement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SignalementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    demande<T extends Signalement$demandeArgs<ExtArgs> = {}>(args?: Subset<T, Signalement$demandeArgs<ExtArgs>>): Prisma__DemandeClient<$Result.GetResult<Prisma.$DemandePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    artisan<T extends ArtisanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ArtisanDefaultArgs<ExtArgs>>): Prisma__ArtisanClient<$Result.GetResult<Prisma.$ArtisanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Signalement model
+   */
+  interface SignalementFieldRefs {
+    readonly id: FieldRef<"Signalement", 'String'>
+    readonly motif: FieldRef<"Signalement", 'MotifSignalement'>
+    readonly description: FieldRef<"Signalement", 'String'>
+    readonly statut: FieldRef<"Signalement", 'StatutSignalement'>
+    readonly createdAt: FieldRef<"Signalement", 'DateTime'>
+    readonly demandeId: FieldRef<"Signalement", 'String'>
+    readonly artisanId: FieldRef<"Signalement", 'String'>
+    readonly clientId: FieldRef<"Signalement", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Signalement findUnique
+   */
+  export type SignalementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter, which Signalement to fetch.
+     */
+    where: SignalementWhereUniqueInput
+  }
+
+  /**
+   * Signalement findUniqueOrThrow
+   */
+  export type SignalementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter, which Signalement to fetch.
+     */
+    where: SignalementWhereUniqueInput
+  }
+
+  /**
+   * Signalement findFirst
+   */
+  export type SignalementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter, which Signalement to fetch.
+     */
+    where?: SignalementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Signalements to fetch.
+     */
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Signalements.
+     */
+    cursor?: SignalementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Signalements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Signalements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Signalements.
+     */
+    distinct?: SignalementScalarFieldEnum | SignalementScalarFieldEnum[]
+  }
+
+  /**
+   * Signalement findFirstOrThrow
+   */
+  export type SignalementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter, which Signalement to fetch.
+     */
+    where?: SignalementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Signalements to fetch.
+     */
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Signalements.
+     */
+    cursor?: SignalementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Signalements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Signalements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Signalements.
+     */
+    distinct?: SignalementScalarFieldEnum | SignalementScalarFieldEnum[]
+  }
+
+  /**
+   * Signalement findMany
+   */
+  export type SignalementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter, which Signalements to fetch.
+     */
+    where?: SignalementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Signalements to fetch.
+     */
+    orderBy?: SignalementOrderByWithRelationInput | SignalementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Signalements.
+     */
+    cursor?: SignalementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Signalements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Signalements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Signalements.
+     */
+    distinct?: SignalementScalarFieldEnum | SignalementScalarFieldEnum[]
+  }
+
+  /**
+   * Signalement create
+   */
+  export type SignalementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Signalement.
+     */
+    data: XOR<SignalementCreateInput, SignalementUncheckedCreateInput>
+  }
+
+  /**
+   * Signalement createMany
+   */
+  export type SignalementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Signalements.
+     */
+    data: SignalementCreateManyInput | SignalementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Signalement createManyAndReturn
+   */
+  export type SignalementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * The data used to create many Signalements.
+     */
+    data: SignalementCreateManyInput | SignalementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Signalement update
+   */
+  export type SignalementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Signalement.
+     */
+    data: XOR<SignalementUpdateInput, SignalementUncheckedUpdateInput>
+    /**
+     * Choose, which Signalement to update.
+     */
+    where: SignalementWhereUniqueInput
+  }
+
+  /**
+   * Signalement updateMany
+   */
+  export type SignalementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Signalements.
+     */
+    data: XOR<SignalementUpdateManyMutationInput, SignalementUncheckedUpdateManyInput>
+    /**
+     * Filter which Signalements to update
+     */
+    where?: SignalementWhereInput
+    /**
+     * Limit how many Signalements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Signalement updateManyAndReturn
+   */
+  export type SignalementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * The data used to update Signalements.
+     */
+    data: XOR<SignalementUpdateManyMutationInput, SignalementUncheckedUpdateManyInput>
+    /**
+     * Filter which Signalements to update
+     */
+    where?: SignalementWhereInput
+    /**
+     * Limit how many Signalements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Signalement upsert
+   */
+  export type SignalementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Signalement to update in case it exists.
+     */
+    where: SignalementWhereUniqueInput
+    /**
+     * In case the Signalement found by the `where` argument doesn't exist, create a new Signalement with this data.
+     */
+    create: XOR<SignalementCreateInput, SignalementUncheckedCreateInput>
+    /**
+     * In case the Signalement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SignalementUpdateInput, SignalementUncheckedUpdateInput>
+  }
+
+  /**
+   * Signalement delete
+   */
+  export type SignalementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
+    /**
+     * Filter which Signalement to delete.
+     */
+    where: SignalementWhereUniqueInput
+  }
+
+  /**
+   * Signalement deleteMany
+   */
+  export type SignalementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Signalements to delete
+     */
+    where?: SignalementWhereInput
+    /**
+     * Limit how many Signalements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Signalement.demande
+   */
+  export type Signalement$demandeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demande
+     */
+    select?: DemandeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demande
+     */
+    omit?: DemandeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemandeInclude<ExtArgs> | null
+    where?: DemandeWhereInput
+  }
+
+  /**
+   * Signalement without action
+   */
+  export type SignalementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Signalement
+     */
+    select?: SignalementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Signalement
+     */
+    omit?: SignalementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SignalementInclude<ExtArgs> | null
   }
 
 
@@ -5793,6 +8473,33 @@ export namespace Prisma {
   export type DemandeScalarFieldEnum = (typeof DemandeScalarFieldEnum)[keyof typeof DemandeScalarFieldEnum]
 
 
+  export const AvisScalarFieldEnum: {
+    id: 'id',
+    note: 'note',
+    commentaire: 'commentaire',
+    createdAt: 'createdAt',
+    demandeId: 'demandeId',
+    artisanId: 'artisanId',
+    clientId: 'clientId'
+  };
+
+  export type AvisScalarFieldEnum = (typeof AvisScalarFieldEnum)[keyof typeof AvisScalarFieldEnum]
+
+
+  export const SignalementScalarFieldEnum: {
+    id: 'id',
+    motif: 'motif',
+    description: 'description',
+    statut: 'statut',
+    createdAt: 'createdAt',
+    demandeId: 'demandeId',
+    artisanId: 'artisanId',
+    clientId: 'clientId'
+  };
+
+  export type SignalementScalarFieldEnum = (typeof SignalementScalarFieldEnum)[keyof typeof SignalementScalarFieldEnum]
+
+
   export const CodeVerifScalarFieldEnum: {
     id: 'id',
     phone: 'phone',
@@ -5936,6 +8643,34 @@ export namespace Prisma {
    */
   export type ListEnumStatutDemandeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatutDemande[]'>
     
+
+
+  /**
+   * Reference to a field of type 'MotifSignalement'
+   */
+  export type EnumMotifSignalementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MotifSignalement'>
+    
+
+
+  /**
+   * Reference to a field of type 'MotifSignalement[]'
+   */
+  export type ListEnumMotifSignalementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MotifSignalement[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'StatutSignalement'
+   */
+  export type EnumStatutSignalementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatutSignalement'>
+    
+
+
+  /**
+   * Reference to a field of type 'StatutSignalement[]'
+   */
+  export type ListEnumStatutSignalementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatutSignalement[]'>
+    
   /**
    * Deep Input Types
    */
@@ -5952,6 +8687,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     artisan?: XOR<ArtisanNullableScalarRelationFilter, ArtisanWhereInput> | null
     demandesClient?: DemandeListRelationFilter
+    avisDonnes?: AvisListRelationFilter
+    signalements?: SignalementListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5962,6 +8699,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     artisan?: ArtisanOrderByWithRelationInput
     demandesClient?: DemandeOrderByRelationAggregateInput
+    avisDonnes?: AvisOrderByRelationAggregateInput
+    signalements?: SignalementOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5975,6 +8714,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     artisan?: XOR<ArtisanNullableScalarRelationFilter, ArtisanWhereInput> | null
     demandesClient?: DemandeListRelationFilter
+    avisDonnes?: AvisListRelationFilter
+    signalements?: SignalementListRelationFilter
   }, "id" | "phone">
 
   export type UserOrderByWithAggregationInput = {
@@ -6015,6 +8756,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Artisan"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     demandes?: DemandeListRelationFilter
+    avisRecus?: AvisListRelationFilter
+    signalementsRecus?: SignalementListRelationFilter
   }
 
   export type ArtisanOrderByWithRelationInput = {
@@ -6030,6 +8773,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
     demandes?: DemandeOrderByRelationAggregateInput
+    avisRecus?: AvisOrderByRelationAggregateInput
+    signalementsRecus?: SignalementOrderByRelationAggregateInput
   }
 
   export type ArtisanWhereUniqueInput = Prisma.AtLeast<{
@@ -6048,6 +8793,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Artisan"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     demandes?: DemandeListRelationFilter
+    avisRecus?: AvisListRelationFilter
+    signalementsRecus?: SignalementListRelationFilter
   }, "id" | "userId">
 
   export type ArtisanOrderByWithAggregationInput = {
@@ -6100,6 +8847,8 @@ export namespace Prisma {
     artisanId?: StringNullableFilter<"Demande"> | string | null
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     artisan?: XOR<ArtisanNullableScalarRelationFilter, ArtisanWhereInput> | null
+    avis?: XOR<AvisNullableScalarRelationFilter, AvisWhereInput> | null
+    signalement?: XOR<SignalementNullableScalarRelationFilter, SignalementWhereInput> | null
   }
 
   export type DemandeOrderByWithRelationInput = {
@@ -6115,6 +8864,8 @@ export namespace Prisma {
     artisanId?: SortOrderInput | SortOrder
     client?: UserOrderByWithRelationInput
     artisan?: ArtisanOrderByWithRelationInput
+    avis?: AvisOrderByWithRelationInput
+    signalement?: SignalementOrderByWithRelationInput
   }
 
   export type DemandeWhereUniqueInput = Prisma.AtLeast<{
@@ -6133,6 +8884,8 @@ export namespace Prisma {
     artisanId?: StringNullableFilter<"Demande"> | string | null
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     artisan?: XOR<ArtisanNullableScalarRelationFilter, ArtisanWhereInput> | null
+    avis?: XOR<AvisNullableScalarRelationFilter, AvisWhereInput> | null
+    signalement?: XOR<SignalementNullableScalarRelationFilter, SignalementWhereInput> | null
   }, "id">
 
   export type DemandeOrderByWithAggregationInput = {
@@ -6167,6 +8920,155 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Demande"> | Date | string
     clientId?: StringWithAggregatesFilter<"Demande"> | string
     artisanId?: StringNullableWithAggregatesFilter<"Demande"> | string | null
+  }
+
+  export type AvisWhereInput = {
+    AND?: AvisWhereInput | AvisWhereInput[]
+    OR?: AvisWhereInput[]
+    NOT?: AvisWhereInput | AvisWhereInput[]
+    id?: StringFilter<"Avis"> | string
+    note?: IntFilter<"Avis"> | number
+    commentaire?: StringFilter<"Avis"> | string
+    createdAt?: DateTimeFilter<"Avis"> | Date | string
+    demandeId?: StringFilter<"Avis"> | string
+    artisanId?: StringFilter<"Avis"> | string
+    clientId?: StringFilter<"Avis"> | string
+    demande?: XOR<DemandeScalarRelationFilter, DemandeWhereInput>
+    artisan?: XOR<ArtisanScalarRelationFilter, ArtisanWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AvisOrderByWithRelationInput = {
+    id?: SortOrder
+    note?: SortOrder
+    commentaire?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+    demande?: DemandeOrderByWithRelationInput
+    artisan?: ArtisanOrderByWithRelationInput
+    client?: UserOrderByWithRelationInput
+  }
+
+  export type AvisWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    demandeId?: string
+    AND?: AvisWhereInput | AvisWhereInput[]
+    OR?: AvisWhereInput[]
+    NOT?: AvisWhereInput | AvisWhereInput[]
+    note?: IntFilter<"Avis"> | number
+    commentaire?: StringFilter<"Avis"> | string
+    createdAt?: DateTimeFilter<"Avis"> | Date | string
+    artisanId?: StringFilter<"Avis"> | string
+    clientId?: StringFilter<"Avis"> | string
+    demande?: XOR<DemandeScalarRelationFilter, DemandeWhereInput>
+    artisan?: XOR<ArtisanScalarRelationFilter, ArtisanWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "demandeId">
+
+  export type AvisOrderByWithAggregationInput = {
+    id?: SortOrder
+    note?: SortOrder
+    commentaire?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+    _count?: AvisCountOrderByAggregateInput
+    _avg?: AvisAvgOrderByAggregateInput
+    _max?: AvisMaxOrderByAggregateInput
+    _min?: AvisMinOrderByAggregateInput
+    _sum?: AvisSumOrderByAggregateInput
+  }
+
+  export type AvisScalarWhereWithAggregatesInput = {
+    AND?: AvisScalarWhereWithAggregatesInput | AvisScalarWhereWithAggregatesInput[]
+    OR?: AvisScalarWhereWithAggregatesInput[]
+    NOT?: AvisScalarWhereWithAggregatesInput | AvisScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Avis"> | string
+    note?: IntWithAggregatesFilter<"Avis"> | number
+    commentaire?: StringWithAggregatesFilter<"Avis"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Avis"> | Date | string
+    demandeId?: StringWithAggregatesFilter<"Avis"> | string
+    artisanId?: StringWithAggregatesFilter<"Avis"> | string
+    clientId?: StringWithAggregatesFilter<"Avis"> | string
+  }
+
+  export type SignalementWhereInput = {
+    AND?: SignalementWhereInput | SignalementWhereInput[]
+    OR?: SignalementWhereInput[]
+    NOT?: SignalementWhereInput | SignalementWhereInput[]
+    id?: StringFilter<"Signalement"> | string
+    motif?: EnumMotifSignalementFilter<"Signalement"> | $Enums.MotifSignalement
+    description?: StringFilter<"Signalement"> | string
+    statut?: EnumStatutSignalementFilter<"Signalement"> | $Enums.StatutSignalement
+    createdAt?: DateTimeFilter<"Signalement"> | Date | string
+    demandeId?: StringNullableFilter<"Signalement"> | string | null
+    artisanId?: StringFilter<"Signalement"> | string
+    clientId?: StringFilter<"Signalement"> | string
+    demande?: XOR<DemandeNullableScalarRelationFilter, DemandeWhereInput> | null
+    artisan?: XOR<ArtisanScalarRelationFilter, ArtisanWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SignalementOrderByWithRelationInput = {
+    id?: SortOrder
+    motif?: SortOrder
+    description?: SortOrder
+    statut?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrderInput | SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+    demande?: DemandeOrderByWithRelationInput
+    artisan?: ArtisanOrderByWithRelationInput
+    client?: UserOrderByWithRelationInput
+  }
+
+  export type SignalementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    demandeId?: string
+    AND?: SignalementWhereInput | SignalementWhereInput[]
+    OR?: SignalementWhereInput[]
+    NOT?: SignalementWhereInput | SignalementWhereInput[]
+    motif?: EnumMotifSignalementFilter<"Signalement"> | $Enums.MotifSignalement
+    description?: StringFilter<"Signalement"> | string
+    statut?: EnumStatutSignalementFilter<"Signalement"> | $Enums.StatutSignalement
+    createdAt?: DateTimeFilter<"Signalement"> | Date | string
+    artisanId?: StringFilter<"Signalement"> | string
+    clientId?: StringFilter<"Signalement"> | string
+    demande?: XOR<DemandeNullableScalarRelationFilter, DemandeWhereInput> | null
+    artisan?: XOR<ArtisanScalarRelationFilter, ArtisanWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "demandeId">
+
+  export type SignalementOrderByWithAggregationInput = {
+    id?: SortOrder
+    motif?: SortOrder
+    description?: SortOrder
+    statut?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrderInput | SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+    _count?: SignalementCountOrderByAggregateInput
+    _max?: SignalementMaxOrderByAggregateInput
+    _min?: SignalementMinOrderByAggregateInput
+  }
+
+  export type SignalementScalarWhereWithAggregatesInput = {
+    AND?: SignalementScalarWhereWithAggregatesInput | SignalementScalarWhereWithAggregatesInput[]
+    OR?: SignalementScalarWhereWithAggregatesInput[]
+    NOT?: SignalementScalarWhereWithAggregatesInput | SignalementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Signalement"> | string
+    motif?: EnumMotifSignalementWithAggregatesFilter<"Signalement"> | $Enums.MotifSignalement
+    description?: StringWithAggregatesFilter<"Signalement"> | string
+    statut?: EnumStatutSignalementWithAggregatesFilter<"Signalement"> | $Enums.StatutSignalement
+    createdAt?: DateTimeWithAggregatesFilter<"Signalement"> | Date | string
+    demandeId?: StringNullableWithAggregatesFilter<"Signalement"> | string | null
+    artisanId?: StringWithAggregatesFilter<"Signalement"> | string
+    clientId?: StringWithAggregatesFilter<"Signalement"> | string
   }
 
   export type CodeVerifWhereInput = {
@@ -6229,6 +9131,8 @@ export namespace Prisma {
     createdAt?: Date | string
     artisan?: ArtisanCreateNestedOneWithoutUserInput
     demandesClient?: DemandeCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisCreateNestedManyWithoutClientInput
+    signalements?: SignalementCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6239,6 +9143,8 @@ export namespace Prisma {
     createdAt?: Date | string
     artisan?: ArtisanUncheckedCreateNestedOneWithoutUserInput
     demandesClient?: DemandeUncheckedCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisUncheckedCreateNestedManyWithoutClientInput
+    signalements?: SignalementUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserUpdateInput = {
@@ -6249,6 +9155,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisan?: ArtisanUpdateOneWithoutUserNestedInput
     demandesClient?: DemandeUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6259,6 +9167,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisan?: ArtisanUncheckedUpdateOneWithoutUserNestedInput
     demandesClient?: DemandeUncheckedUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUncheckedUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6297,6 +9207,8 @@ export namespace Prisma {
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutArtisanInput
     demandes?: DemandeCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanUncheckedCreateInput = {
@@ -6311,6 +9223,8 @@ export namespace Prisma {
     soldeKobo?: number
     createdAt?: Date | string
     demandes?: DemandeUncheckedCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisUncheckedCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementUncheckedCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanUpdateInput = {
@@ -6325,6 +9239,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutArtisanNestedInput
     demandes?: DemandeUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUpdateManyWithoutArtisanNestedInput
   }
 
   export type ArtisanUncheckedUpdateInput = {
@@ -6339,6 +9255,8 @@ export namespace Prisma {
     soldeKobo?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     demandes?: DemandeUncheckedUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUncheckedUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUncheckedUpdateManyWithoutArtisanNestedInput
   }
 
   export type ArtisanCreateManyInput = {
@@ -6390,6 +9308,8 @@ export namespace Prisma {
     createdAt?: Date | string
     client: UserCreateNestedOneWithoutDemandesClientInput
     artisan?: ArtisanCreateNestedOneWithoutDemandesInput
+    avis?: AvisCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeUncheckedCreateInput = {
@@ -6403,6 +9323,8 @@ export namespace Prisma {
     createdAt?: Date | string
     clientId: string
     artisanId?: string | null
+    avis?: AvisUncheckedCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementUncheckedCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeUpdateInput = {
@@ -6416,6 +9338,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneRequiredWithoutDemandesClientNestedInput
     artisan?: ArtisanUpdateOneWithoutDemandesNestedInput
+    avis?: AvisUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeUncheckedUpdateInput = {
@@ -6429,6 +9353,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clientId?: StringFieldUpdateOperationsInput | string
     artisanId?: NullableStringFieldUpdateOperationsInput | string | null
+    avis?: AvisUncheckedUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUncheckedUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeCreateManyInput = {
@@ -6466,6 +9392,147 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clientId?: StringFieldUpdateOperationsInput | string
     artisanId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AvisCreateInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demande: DemandeCreateNestedOneWithoutAvisInput
+    artisan: ArtisanCreateNestedOneWithoutAvisRecusInput
+    client: UserCreateNestedOneWithoutAvisDonnesInput
+  }
+
+  export type AvisUncheckedCreateInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    artisanId: string
+    clientId: string
+  }
+
+  export type AvisUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneRequiredWithoutAvisNestedInput
+    artisan?: ArtisanUpdateOneRequiredWithoutAvisRecusNestedInput
+    client?: UserUpdateOneRequiredWithoutAvisDonnesNestedInput
+  }
+
+  export type AvisUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AvisCreateManyInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    artisanId: string
+    clientId: string
+  }
+
+  export type AvisUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AvisUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementCreateInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demande?: DemandeCreateNestedOneWithoutSignalementInput
+    artisan: ArtisanCreateNestedOneWithoutSignalementsRecusInput
+    client: UserCreateNestedOneWithoutSignalementsInput
+  }
+
+  export type SignalementUncheckedCreateInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
+    artisanId: string
+    clientId: string
+  }
+
+  export type SignalementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneWithoutSignalementNestedInput
+    artisan?: ArtisanUpdateOneRequiredWithoutSignalementsRecusNestedInput
+    client?: UserUpdateOneRequiredWithoutSignalementsNestedInput
+  }
+
+  export type SignalementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementCreateManyInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
+    artisanId: string
+    clientId: string
+  }
+
+  export type SignalementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignalementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CodeVerifCreateInput = {
@@ -6568,7 +9635,27 @@ export namespace Prisma {
     none?: DemandeWhereInput
   }
 
+  export type AvisListRelationFilter = {
+    every?: AvisWhereInput
+    some?: AvisWhereInput
+    none?: AvisWhereInput
+  }
+
+  export type SignalementListRelationFilter = {
+    every?: SignalementWhereInput
+    some?: SignalementWhereInput
+    none?: SignalementWhereInput
+  }
+
   export type DemandeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AvisOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SignalementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6809,6 +9896,16 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type AvisNullableScalarRelationFilter = {
+    is?: AvisWhereInput | null
+    isNot?: AvisWhereInput | null
+  }
+
+  export type SignalementNullableScalarRelationFilter = {
+    is?: SignalementWhereInput | null
+    isNot?: SignalementWhereInput | null
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -6915,6 +10012,126 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type DemandeScalarRelationFilter = {
+    is?: DemandeWhereInput
+    isNot?: DemandeWhereInput
+  }
+
+  export type ArtisanScalarRelationFilter = {
+    is?: ArtisanWhereInput
+    isNot?: ArtisanWhereInput
+  }
+
+  export type AvisCountOrderByAggregateInput = {
+    id?: SortOrder
+    note?: SortOrder
+    commentaire?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type AvisAvgOrderByAggregateInput = {
+    note?: SortOrder
+  }
+
+  export type AvisMaxOrderByAggregateInput = {
+    id?: SortOrder
+    note?: SortOrder
+    commentaire?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type AvisMinOrderByAggregateInput = {
+    id?: SortOrder
+    note?: SortOrder
+    commentaire?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type AvisSumOrderByAggregateInput = {
+    note?: SortOrder
+  }
+
+  export type EnumMotifSignalementFilter<$PrismaModel = never> = {
+    equals?: $Enums.MotifSignalement | EnumMotifSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumMotifSignalementFilter<$PrismaModel> | $Enums.MotifSignalement
+  }
+
+  export type EnumStatutSignalementFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatutSignalement | EnumStatutSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatutSignalementFilter<$PrismaModel> | $Enums.StatutSignalement
+  }
+
+  export type DemandeNullableScalarRelationFilter = {
+    is?: DemandeWhereInput | null
+    isNot?: DemandeWhereInput | null
+  }
+
+  export type SignalementCountOrderByAggregateInput = {
+    id?: SortOrder
+    motif?: SortOrder
+    description?: SortOrder
+    statut?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type SignalementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    motif?: SortOrder
+    description?: SortOrder
+    statut?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type SignalementMinOrderByAggregateInput = {
+    id?: SortOrder
+    motif?: SortOrder
+    description?: SortOrder
+    statut?: SortOrder
+    createdAt?: SortOrder
+    demandeId?: SortOrder
+    artisanId?: SortOrder
+    clientId?: SortOrder
+  }
+
+  export type EnumMotifSignalementWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MotifSignalement | EnumMotifSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumMotifSignalementWithAggregatesFilter<$PrismaModel> | $Enums.MotifSignalement
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMotifSignalementFilter<$PrismaModel>
+    _max?: NestedEnumMotifSignalementFilter<$PrismaModel>
+  }
+
+  export type EnumStatutSignalementWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatutSignalement | EnumStatutSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatutSignalementWithAggregatesFilter<$PrismaModel> | $Enums.StatutSignalement
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatutSignalementFilter<$PrismaModel>
+    _max?: NestedEnumStatutSignalementFilter<$PrismaModel>
+  }
+
   export type CodeVerifCountOrderByAggregateInput = {
     id?: SortOrder
     phone?: SortOrder
@@ -6952,6 +10169,20 @@ export namespace Prisma {
     connect?: DemandeWhereUniqueInput | DemandeWhereUniqueInput[]
   }
 
+  export type AvisCreateNestedManyWithoutClientInput = {
+    create?: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput> | AvisCreateWithoutClientInput[] | AvisUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutClientInput | AvisCreateOrConnectWithoutClientInput[]
+    createMany?: AvisCreateManyClientInputEnvelope
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+  }
+
+  export type SignalementCreateNestedManyWithoutClientInput = {
+    create?: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput> | SignalementCreateWithoutClientInput[] | SignalementUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutClientInput | SignalementCreateOrConnectWithoutClientInput[]
+    createMany?: SignalementCreateManyClientInputEnvelope
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+  }
+
   export type ArtisanUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<ArtisanCreateWithoutUserInput, ArtisanUncheckedCreateWithoutUserInput>
     connectOrCreate?: ArtisanCreateOrConnectWithoutUserInput
@@ -6963,6 +10194,20 @@ export namespace Prisma {
     connectOrCreate?: DemandeCreateOrConnectWithoutClientInput | DemandeCreateOrConnectWithoutClientInput[]
     createMany?: DemandeCreateManyClientInputEnvelope
     connect?: DemandeWhereUniqueInput | DemandeWhereUniqueInput[]
+  }
+
+  export type AvisUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput> | AvisCreateWithoutClientInput[] | AvisUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutClientInput | AvisCreateOrConnectWithoutClientInput[]
+    createMany?: AvisCreateManyClientInputEnvelope
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+  }
+
+  export type SignalementUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput> | SignalementCreateWithoutClientInput[] | SignalementUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutClientInput | SignalementCreateOrConnectWithoutClientInput[]
+    createMany?: SignalementCreateManyClientInputEnvelope
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7001,6 +10246,34 @@ export namespace Prisma {
     deleteMany?: DemandeScalarWhereInput | DemandeScalarWhereInput[]
   }
 
+  export type AvisUpdateManyWithoutClientNestedInput = {
+    create?: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput> | AvisCreateWithoutClientInput[] | AvisUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutClientInput | AvisCreateOrConnectWithoutClientInput[]
+    upsert?: AvisUpsertWithWhereUniqueWithoutClientInput | AvisUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: AvisCreateManyClientInputEnvelope
+    set?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    disconnect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    delete?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    update?: AvisUpdateWithWhereUniqueWithoutClientInput | AvisUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: AvisUpdateManyWithWhereWithoutClientInput | AvisUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: AvisScalarWhereInput | AvisScalarWhereInput[]
+  }
+
+  export type SignalementUpdateManyWithoutClientNestedInput = {
+    create?: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput> | SignalementCreateWithoutClientInput[] | SignalementUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutClientInput | SignalementCreateOrConnectWithoutClientInput[]
+    upsert?: SignalementUpsertWithWhereUniqueWithoutClientInput | SignalementUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: SignalementCreateManyClientInputEnvelope
+    set?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    disconnect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    delete?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    update?: SignalementUpdateWithWhereUniqueWithoutClientInput | SignalementUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: SignalementUpdateManyWithWhereWithoutClientInput | SignalementUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+  }
+
   export type ArtisanUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<ArtisanCreateWithoutUserInput, ArtisanUncheckedCreateWithoutUserInput>
     connectOrCreate?: ArtisanCreateOrConnectWithoutUserInput
@@ -7025,6 +10298,34 @@ export namespace Prisma {
     deleteMany?: DemandeScalarWhereInput | DemandeScalarWhereInput[]
   }
 
+  export type AvisUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput> | AvisCreateWithoutClientInput[] | AvisUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutClientInput | AvisCreateOrConnectWithoutClientInput[]
+    upsert?: AvisUpsertWithWhereUniqueWithoutClientInput | AvisUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: AvisCreateManyClientInputEnvelope
+    set?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    disconnect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    delete?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    update?: AvisUpdateWithWhereUniqueWithoutClientInput | AvisUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: AvisUpdateManyWithWhereWithoutClientInput | AvisUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: AvisScalarWhereInput | AvisScalarWhereInput[]
+  }
+
+  export type SignalementUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput> | SignalementCreateWithoutClientInput[] | SignalementUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutClientInput | SignalementCreateOrConnectWithoutClientInput[]
+    upsert?: SignalementUpsertWithWhereUniqueWithoutClientInput | SignalementUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: SignalementCreateManyClientInputEnvelope
+    set?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    disconnect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    delete?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    update?: SignalementUpdateWithWhereUniqueWithoutClientInput | SignalementUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: SignalementUpdateManyWithWhereWithoutClientInput | SignalementUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+  }
+
   export type ArtisanCreatemetiersInput = {
     set: $Enums.Metier[]
   }
@@ -7042,11 +10343,39 @@ export namespace Prisma {
     connect?: DemandeWhereUniqueInput | DemandeWhereUniqueInput[]
   }
 
+  export type AvisCreateNestedManyWithoutArtisanInput = {
+    create?: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput> | AvisCreateWithoutArtisanInput[] | AvisUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutArtisanInput | AvisCreateOrConnectWithoutArtisanInput[]
+    createMany?: AvisCreateManyArtisanInputEnvelope
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+  }
+
+  export type SignalementCreateNestedManyWithoutArtisanInput = {
+    create?: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput> | SignalementCreateWithoutArtisanInput[] | SignalementUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutArtisanInput | SignalementCreateOrConnectWithoutArtisanInput[]
+    createMany?: SignalementCreateManyArtisanInputEnvelope
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+  }
+
   export type DemandeUncheckedCreateNestedManyWithoutArtisanInput = {
     create?: XOR<DemandeCreateWithoutArtisanInput, DemandeUncheckedCreateWithoutArtisanInput> | DemandeCreateWithoutArtisanInput[] | DemandeUncheckedCreateWithoutArtisanInput[]
     connectOrCreate?: DemandeCreateOrConnectWithoutArtisanInput | DemandeCreateOrConnectWithoutArtisanInput[]
     createMany?: DemandeCreateManyArtisanInputEnvelope
     connect?: DemandeWhereUniqueInput | DemandeWhereUniqueInput[]
+  }
+
+  export type AvisUncheckedCreateNestedManyWithoutArtisanInput = {
+    create?: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput> | AvisCreateWithoutArtisanInput[] | AvisUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutArtisanInput | AvisCreateOrConnectWithoutArtisanInput[]
+    createMany?: AvisCreateManyArtisanInputEnvelope
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+  }
+
+  export type SignalementUncheckedCreateNestedManyWithoutArtisanInput = {
+    create?: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput> | SignalementCreateWithoutArtisanInput[] | SignalementUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutArtisanInput | SignalementCreateOrConnectWithoutArtisanInput[]
+    createMany?: SignalementCreateManyArtisanInputEnvelope
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
   }
 
   export type ArtisanUpdatemetiersInput = {
@@ -7096,6 +10425,34 @@ export namespace Prisma {
     deleteMany?: DemandeScalarWhereInput | DemandeScalarWhereInput[]
   }
 
+  export type AvisUpdateManyWithoutArtisanNestedInput = {
+    create?: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput> | AvisCreateWithoutArtisanInput[] | AvisUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutArtisanInput | AvisCreateOrConnectWithoutArtisanInput[]
+    upsert?: AvisUpsertWithWhereUniqueWithoutArtisanInput | AvisUpsertWithWhereUniqueWithoutArtisanInput[]
+    createMany?: AvisCreateManyArtisanInputEnvelope
+    set?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    disconnect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    delete?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    update?: AvisUpdateWithWhereUniqueWithoutArtisanInput | AvisUpdateWithWhereUniqueWithoutArtisanInput[]
+    updateMany?: AvisUpdateManyWithWhereWithoutArtisanInput | AvisUpdateManyWithWhereWithoutArtisanInput[]
+    deleteMany?: AvisScalarWhereInput | AvisScalarWhereInput[]
+  }
+
+  export type SignalementUpdateManyWithoutArtisanNestedInput = {
+    create?: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput> | SignalementCreateWithoutArtisanInput[] | SignalementUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutArtisanInput | SignalementCreateOrConnectWithoutArtisanInput[]
+    upsert?: SignalementUpsertWithWhereUniqueWithoutArtisanInput | SignalementUpsertWithWhereUniqueWithoutArtisanInput[]
+    createMany?: SignalementCreateManyArtisanInputEnvelope
+    set?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    disconnect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    delete?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    update?: SignalementUpdateWithWhereUniqueWithoutArtisanInput | SignalementUpdateWithWhereUniqueWithoutArtisanInput[]
+    updateMany?: SignalementUpdateManyWithWhereWithoutArtisanInput | SignalementUpdateManyWithWhereWithoutArtisanInput[]
+    deleteMany?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+  }
+
   export type DemandeUncheckedUpdateManyWithoutArtisanNestedInput = {
     create?: XOR<DemandeCreateWithoutArtisanInput, DemandeUncheckedCreateWithoutArtisanInput> | DemandeCreateWithoutArtisanInput[] | DemandeUncheckedCreateWithoutArtisanInput[]
     connectOrCreate?: DemandeCreateOrConnectWithoutArtisanInput | DemandeCreateOrConnectWithoutArtisanInput[]
@@ -7110,6 +10467,34 @@ export namespace Prisma {
     deleteMany?: DemandeScalarWhereInput | DemandeScalarWhereInput[]
   }
 
+  export type AvisUncheckedUpdateManyWithoutArtisanNestedInput = {
+    create?: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput> | AvisCreateWithoutArtisanInput[] | AvisUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: AvisCreateOrConnectWithoutArtisanInput | AvisCreateOrConnectWithoutArtisanInput[]
+    upsert?: AvisUpsertWithWhereUniqueWithoutArtisanInput | AvisUpsertWithWhereUniqueWithoutArtisanInput[]
+    createMany?: AvisCreateManyArtisanInputEnvelope
+    set?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    disconnect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    delete?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    connect?: AvisWhereUniqueInput | AvisWhereUniqueInput[]
+    update?: AvisUpdateWithWhereUniqueWithoutArtisanInput | AvisUpdateWithWhereUniqueWithoutArtisanInput[]
+    updateMany?: AvisUpdateManyWithWhereWithoutArtisanInput | AvisUpdateManyWithWhereWithoutArtisanInput[]
+    deleteMany?: AvisScalarWhereInput | AvisScalarWhereInput[]
+  }
+
+  export type SignalementUncheckedUpdateManyWithoutArtisanNestedInput = {
+    create?: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput> | SignalementCreateWithoutArtisanInput[] | SignalementUncheckedCreateWithoutArtisanInput[]
+    connectOrCreate?: SignalementCreateOrConnectWithoutArtisanInput | SignalementCreateOrConnectWithoutArtisanInput[]
+    upsert?: SignalementUpsertWithWhereUniqueWithoutArtisanInput | SignalementUpsertWithWhereUniqueWithoutArtisanInput[]
+    createMany?: SignalementCreateManyArtisanInputEnvelope
+    set?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    disconnect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    delete?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    connect?: SignalementWhereUniqueInput | SignalementWhereUniqueInput[]
+    update?: SignalementUpdateWithWhereUniqueWithoutArtisanInput | SignalementUpdateWithWhereUniqueWithoutArtisanInput[]
+    updateMany?: SignalementUpdateManyWithWhereWithoutArtisanInput | SignalementUpdateManyWithWhereWithoutArtisanInput[]
+    deleteMany?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutDemandesClientInput = {
     create?: XOR<UserCreateWithoutDemandesClientInput, UserUncheckedCreateWithoutDemandesClientInput>
     connectOrCreate?: UserCreateOrConnectWithoutDemandesClientInput
@@ -7120,6 +10505,30 @@ export namespace Prisma {
     create?: XOR<ArtisanCreateWithoutDemandesInput, ArtisanUncheckedCreateWithoutDemandesInput>
     connectOrCreate?: ArtisanCreateOrConnectWithoutDemandesInput
     connect?: ArtisanWhereUniqueInput
+  }
+
+  export type AvisCreateNestedOneWithoutDemandeInput = {
+    create?: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: AvisCreateOrConnectWithoutDemandeInput
+    connect?: AvisWhereUniqueInput
+  }
+
+  export type SignalementCreateNestedOneWithoutDemandeInput = {
+    create?: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: SignalementCreateOrConnectWithoutDemandeInput
+    connect?: SignalementWhereUniqueInput
+  }
+
+  export type AvisUncheckedCreateNestedOneWithoutDemandeInput = {
+    create?: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: AvisCreateOrConnectWithoutDemandeInput
+    connect?: AvisWhereUniqueInput
+  }
+
+  export type SignalementUncheckedCreateNestedOneWithoutDemandeInput = {
+    create?: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: SignalementCreateOrConnectWithoutDemandeInput
+    connect?: SignalementWhereUniqueInput
   }
 
   export type EnumMetierFieldUpdateOperationsInput = {
@@ -7156,8 +10565,142 @@ export namespace Prisma {
     update?: XOR<XOR<ArtisanUpdateToOneWithWhereWithoutDemandesInput, ArtisanUpdateWithoutDemandesInput>, ArtisanUncheckedUpdateWithoutDemandesInput>
   }
 
+  export type AvisUpdateOneWithoutDemandeNestedInput = {
+    create?: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: AvisCreateOrConnectWithoutDemandeInput
+    upsert?: AvisUpsertWithoutDemandeInput
+    disconnect?: AvisWhereInput | boolean
+    delete?: AvisWhereInput | boolean
+    connect?: AvisWhereUniqueInput
+    update?: XOR<XOR<AvisUpdateToOneWithWhereWithoutDemandeInput, AvisUpdateWithoutDemandeInput>, AvisUncheckedUpdateWithoutDemandeInput>
+  }
+
+  export type SignalementUpdateOneWithoutDemandeNestedInput = {
+    create?: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: SignalementCreateOrConnectWithoutDemandeInput
+    upsert?: SignalementUpsertWithoutDemandeInput
+    disconnect?: SignalementWhereInput | boolean
+    delete?: SignalementWhereInput | boolean
+    connect?: SignalementWhereUniqueInput
+    update?: XOR<XOR<SignalementUpdateToOneWithWhereWithoutDemandeInput, SignalementUpdateWithoutDemandeInput>, SignalementUncheckedUpdateWithoutDemandeInput>
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type AvisUncheckedUpdateOneWithoutDemandeNestedInput = {
+    create?: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: AvisCreateOrConnectWithoutDemandeInput
+    upsert?: AvisUpsertWithoutDemandeInput
+    disconnect?: AvisWhereInput | boolean
+    delete?: AvisWhereInput | boolean
+    connect?: AvisWhereUniqueInput
+    update?: XOR<XOR<AvisUpdateToOneWithWhereWithoutDemandeInput, AvisUpdateWithoutDemandeInput>, AvisUncheckedUpdateWithoutDemandeInput>
+  }
+
+  export type SignalementUncheckedUpdateOneWithoutDemandeNestedInput = {
+    create?: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
+    connectOrCreate?: SignalementCreateOrConnectWithoutDemandeInput
+    upsert?: SignalementUpsertWithoutDemandeInput
+    disconnect?: SignalementWhereInput | boolean
+    delete?: SignalementWhereInput | boolean
+    connect?: SignalementWhereUniqueInput
+    update?: XOR<XOR<SignalementUpdateToOneWithWhereWithoutDemandeInput, SignalementUpdateWithoutDemandeInput>, SignalementUncheckedUpdateWithoutDemandeInput>
+  }
+
+  export type DemandeCreateNestedOneWithoutAvisInput = {
+    create?: XOR<DemandeCreateWithoutAvisInput, DemandeUncheckedCreateWithoutAvisInput>
+    connectOrCreate?: DemandeCreateOrConnectWithoutAvisInput
+    connect?: DemandeWhereUniqueInput
+  }
+
+  export type ArtisanCreateNestedOneWithoutAvisRecusInput = {
+    create?: XOR<ArtisanCreateWithoutAvisRecusInput, ArtisanUncheckedCreateWithoutAvisRecusInput>
+    connectOrCreate?: ArtisanCreateOrConnectWithoutAvisRecusInput
+    connect?: ArtisanWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutAvisDonnesInput = {
+    create?: XOR<UserCreateWithoutAvisDonnesInput, UserUncheckedCreateWithoutAvisDonnesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAvisDonnesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DemandeUpdateOneRequiredWithoutAvisNestedInput = {
+    create?: XOR<DemandeCreateWithoutAvisInput, DemandeUncheckedCreateWithoutAvisInput>
+    connectOrCreate?: DemandeCreateOrConnectWithoutAvisInput
+    upsert?: DemandeUpsertWithoutAvisInput
+    connect?: DemandeWhereUniqueInput
+    update?: XOR<XOR<DemandeUpdateToOneWithWhereWithoutAvisInput, DemandeUpdateWithoutAvisInput>, DemandeUncheckedUpdateWithoutAvisInput>
+  }
+
+  export type ArtisanUpdateOneRequiredWithoutAvisRecusNestedInput = {
+    create?: XOR<ArtisanCreateWithoutAvisRecusInput, ArtisanUncheckedCreateWithoutAvisRecusInput>
+    connectOrCreate?: ArtisanCreateOrConnectWithoutAvisRecusInput
+    upsert?: ArtisanUpsertWithoutAvisRecusInput
+    connect?: ArtisanWhereUniqueInput
+    update?: XOR<XOR<ArtisanUpdateToOneWithWhereWithoutAvisRecusInput, ArtisanUpdateWithoutAvisRecusInput>, ArtisanUncheckedUpdateWithoutAvisRecusInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutAvisDonnesNestedInput = {
+    create?: XOR<UserCreateWithoutAvisDonnesInput, UserUncheckedCreateWithoutAvisDonnesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAvisDonnesInput
+    upsert?: UserUpsertWithoutAvisDonnesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAvisDonnesInput, UserUpdateWithoutAvisDonnesInput>, UserUncheckedUpdateWithoutAvisDonnesInput>
+  }
+
+  export type DemandeCreateNestedOneWithoutSignalementInput = {
+    create?: XOR<DemandeCreateWithoutSignalementInput, DemandeUncheckedCreateWithoutSignalementInput>
+    connectOrCreate?: DemandeCreateOrConnectWithoutSignalementInput
+    connect?: DemandeWhereUniqueInput
+  }
+
+  export type ArtisanCreateNestedOneWithoutSignalementsRecusInput = {
+    create?: XOR<ArtisanCreateWithoutSignalementsRecusInput, ArtisanUncheckedCreateWithoutSignalementsRecusInput>
+    connectOrCreate?: ArtisanCreateOrConnectWithoutSignalementsRecusInput
+    connect?: ArtisanWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSignalementsInput = {
+    create?: XOR<UserCreateWithoutSignalementsInput, UserUncheckedCreateWithoutSignalementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSignalementsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumMotifSignalementFieldUpdateOperationsInput = {
+    set?: $Enums.MotifSignalement
+  }
+
+  export type EnumStatutSignalementFieldUpdateOperationsInput = {
+    set?: $Enums.StatutSignalement
+  }
+
+  export type DemandeUpdateOneWithoutSignalementNestedInput = {
+    create?: XOR<DemandeCreateWithoutSignalementInput, DemandeUncheckedCreateWithoutSignalementInput>
+    connectOrCreate?: DemandeCreateOrConnectWithoutSignalementInput
+    upsert?: DemandeUpsertWithoutSignalementInput
+    disconnect?: DemandeWhereInput | boolean
+    delete?: DemandeWhereInput | boolean
+    connect?: DemandeWhereUniqueInput
+    update?: XOR<XOR<DemandeUpdateToOneWithWhereWithoutSignalementInput, DemandeUpdateWithoutSignalementInput>, DemandeUncheckedUpdateWithoutSignalementInput>
+  }
+
+  export type ArtisanUpdateOneRequiredWithoutSignalementsRecusNestedInput = {
+    create?: XOR<ArtisanCreateWithoutSignalementsRecusInput, ArtisanUncheckedCreateWithoutSignalementsRecusInput>
+    connectOrCreate?: ArtisanCreateOrConnectWithoutSignalementsRecusInput
+    upsert?: ArtisanUpsertWithoutSignalementsRecusInput
+    connect?: ArtisanWhereUniqueInput
+    update?: XOR<XOR<ArtisanUpdateToOneWithWhereWithoutSignalementsRecusInput, ArtisanUpdateWithoutSignalementsRecusInput>, ArtisanUncheckedUpdateWithoutSignalementsRecusInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSignalementsNestedInput = {
+    create?: XOR<UserCreateWithoutSignalementsInput, UserUncheckedCreateWithoutSignalementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSignalementsInput
+    upsert?: UserUpsertWithoutSignalementsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSignalementsInput, UserUpdateWithoutSignalementsInput>, UserUncheckedUpdateWithoutSignalementsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7403,6 +10946,40 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumMotifSignalementFilter<$PrismaModel = never> = {
+    equals?: $Enums.MotifSignalement | EnumMotifSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumMotifSignalementFilter<$PrismaModel> | $Enums.MotifSignalement
+  }
+
+  export type NestedEnumStatutSignalementFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatutSignalement | EnumStatutSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatutSignalementFilter<$PrismaModel> | $Enums.StatutSignalement
+  }
+
+  export type NestedEnumMotifSignalementWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MotifSignalement | EnumMotifSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MotifSignalement[] | ListEnumMotifSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumMotifSignalementWithAggregatesFilter<$PrismaModel> | $Enums.MotifSignalement
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMotifSignalementFilter<$PrismaModel>
+    _max?: NestedEnumMotifSignalementFilter<$PrismaModel>
+  }
+
+  export type NestedEnumStatutSignalementWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatutSignalement | EnumStatutSignalementFieldRefInput<$PrismaModel>
+    in?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StatutSignalement[] | ListEnumStatutSignalementFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatutSignalementWithAggregatesFilter<$PrismaModel> | $Enums.StatutSignalement
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatutSignalementFilter<$PrismaModel>
+    _max?: NestedEnumStatutSignalementFilter<$PrismaModel>
+  }
+
   export type ArtisanCreateWithoutUserInput = {
     id?: string
     metiers?: ArtisanCreatemetiersInput | $Enums.Metier[]
@@ -7414,6 +10991,8 @@ export namespace Prisma {
     soldeKobo?: number
     createdAt?: Date | string
     demandes?: DemandeCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanUncheckedCreateWithoutUserInput = {
@@ -7427,6 +11006,8 @@ export namespace Prisma {
     soldeKobo?: number
     createdAt?: Date | string
     demandes?: DemandeUncheckedCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisUncheckedCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementUncheckedCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanCreateOrConnectWithoutUserInput = {
@@ -7444,6 +11025,8 @@ export namespace Prisma {
     prixDevis?: number | null
     createdAt?: Date | string
     artisan?: ArtisanCreateNestedOneWithoutDemandesInput
+    avis?: AvisCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeUncheckedCreateWithoutClientInput = {
@@ -7456,6 +11039,8 @@ export namespace Prisma {
     prixDevis?: number | null
     createdAt?: Date | string
     artisanId?: string | null
+    avis?: AvisUncheckedCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementUncheckedCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeCreateOrConnectWithoutClientInput = {
@@ -7465,6 +11050,64 @@ export namespace Prisma {
 
   export type DemandeCreateManyClientInputEnvelope = {
     data: DemandeCreateManyClientInput | DemandeCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AvisCreateWithoutClientInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demande: DemandeCreateNestedOneWithoutAvisInput
+    artisan: ArtisanCreateNestedOneWithoutAvisRecusInput
+  }
+
+  export type AvisUncheckedCreateWithoutClientInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    artisanId: string
+  }
+
+  export type AvisCreateOrConnectWithoutClientInput = {
+    where: AvisWhereUniqueInput
+    create: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput>
+  }
+
+  export type AvisCreateManyClientInputEnvelope = {
+    data: AvisCreateManyClientInput | AvisCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SignalementCreateWithoutClientInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demande?: DemandeCreateNestedOneWithoutSignalementInput
+    artisan: ArtisanCreateNestedOneWithoutSignalementsRecusInput
+  }
+
+  export type SignalementUncheckedCreateWithoutClientInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
+    artisanId: string
+  }
+
+  export type SignalementCreateOrConnectWithoutClientInput = {
+    where: SignalementWhereUniqueInput
+    create: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput>
+  }
+
+  export type SignalementCreateManyClientInputEnvelope = {
+    data: SignalementCreateManyClientInput | SignalementCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -7490,6 +11133,8 @@ export namespace Prisma {
     soldeKobo?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     demandes?: DemandeUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUpdateManyWithoutArtisanNestedInput
   }
 
   export type ArtisanUncheckedUpdateWithoutUserInput = {
@@ -7503,6 +11148,8 @@ export namespace Prisma {
     soldeKobo?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     demandes?: DemandeUncheckedUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUncheckedUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUncheckedUpdateManyWithoutArtisanNestedInput
   }
 
   export type DemandeUpsertWithWhereUniqueWithoutClientInput = {
@@ -7537,6 +11184,65 @@ export namespace Prisma {
     artisanId?: StringNullableFilter<"Demande"> | string | null
   }
 
+  export type AvisUpsertWithWhereUniqueWithoutClientInput = {
+    where: AvisWhereUniqueInput
+    update: XOR<AvisUpdateWithoutClientInput, AvisUncheckedUpdateWithoutClientInput>
+    create: XOR<AvisCreateWithoutClientInput, AvisUncheckedCreateWithoutClientInput>
+  }
+
+  export type AvisUpdateWithWhereUniqueWithoutClientInput = {
+    where: AvisWhereUniqueInput
+    data: XOR<AvisUpdateWithoutClientInput, AvisUncheckedUpdateWithoutClientInput>
+  }
+
+  export type AvisUpdateManyWithWhereWithoutClientInput = {
+    where: AvisScalarWhereInput
+    data: XOR<AvisUpdateManyMutationInput, AvisUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type AvisScalarWhereInput = {
+    AND?: AvisScalarWhereInput | AvisScalarWhereInput[]
+    OR?: AvisScalarWhereInput[]
+    NOT?: AvisScalarWhereInput | AvisScalarWhereInput[]
+    id?: StringFilter<"Avis"> | string
+    note?: IntFilter<"Avis"> | number
+    commentaire?: StringFilter<"Avis"> | string
+    createdAt?: DateTimeFilter<"Avis"> | Date | string
+    demandeId?: StringFilter<"Avis"> | string
+    artisanId?: StringFilter<"Avis"> | string
+    clientId?: StringFilter<"Avis"> | string
+  }
+
+  export type SignalementUpsertWithWhereUniqueWithoutClientInput = {
+    where: SignalementWhereUniqueInput
+    update: XOR<SignalementUpdateWithoutClientInput, SignalementUncheckedUpdateWithoutClientInput>
+    create: XOR<SignalementCreateWithoutClientInput, SignalementUncheckedCreateWithoutClientInput>
+  }
+
+  export type SignalementUpdateWithWhereUniqueWithoutClientInput = {
+    where: SignalementWhereUniqueInput
+    data: XOR<SignalementUpdateWithoutClientInput, SignalementUncheckedUpdateWithoutClientInput>
+  }
+
+  export type SignalementUpdateManyWithWhereWithoutClientInput = {
+    where: SignalementScalarWhereInput
+    data: XOR<SignalementUpdateManyMutationInput, SignalementUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type SignalementScalarWhereInput = {
+    AND?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+    OR?: SignalementScalarWhereInput[]
+    NOT?: SignalementScalarWhereInput | SignalementScalarWhereInput[]
+    id?: StringFilter<"Signalement"> | string
+    motif?: EnumMotifSignalementFilter<"Signalement"> | $Enums.MotifSignalement
+    description?: StringFilter<"Signalement"> | string
+    statut?: EnumStatutSignalementFilter<"Signalement"> | $Enums.StatutSignalement
+    createdAt?: DateTimeFilter<"Signalement"> | Date | string
+    demandeId?: StringNullableFilter<"Signalement"> | string | null
+    artisanId?: StringFilter<"Signalement"> | string
+    clientId?: StringFilter<"Signalement"> | string
+  }
+
   export type UserCreateWithoutArtisanInput = {
     id?: string
     phone: string
@@ -7544,6 +11250,8 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     demandesClient?: DemandeCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisCreateNestedManyWithoutClientInput
+    signalements?: SignalementCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutArtisanInput = {
@@ -7553,6 +11261,8 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     demandesClient?: DemandeUncheckedCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisUncheckedCreateNestedManyWithoutClientInput
+    signalements?: SignalementUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutArtisanInput = {
@@ -7570,6 +11280,8 @@ export namespace Prisma {
     prixDevis?: number | null
     createdAt?: Date | string
     client: UserCreateNestedOneWithoutDemandesClientInput
+    avis?: AvisCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeUncheckedCreateWithoutArtisanInput = {
@@ -7582,6 +11294,8 @@ export namespace Prisma {
     prixDevis?: number | null
     createdAt?: Date | string
     clientId: string
+    avis?: AvisUncheckedCreateNestedOneWithoutDemandeInput
+    signalement?: SignalementUncheckedCreateNestedOneWithoutDemandeInput
   }
 
   export type DemandeCreateOrConnectWithoutArtisanInput = {
@@ -7591,6 +11305,64 @@ export namespace Prisma {
 
   export type DemandeCreateManyArtisanInputEnvelope = {
     data: DemandeCreateManyArtisanInput | DemandeCreateManyArtisanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AvisCreateWithoutArtisanInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demande: DemandeCreateNestedOneWithoutAvisInput
+    client: UserCreateNestedOneWithoutAvisDonnesInput
+  }
+
+  export type AvisUncheckedCreateWithoutArtisanInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    clientId: string
+  }
+
+  export type AvisCreateOrConnectWithoutArtisanInput = {
+    where: AvisWhereUniqueInput
+    create: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput>
+  }
+
+  export type AvisCreateManyArtisanInputEnvelope = {
+    data: AvisCreateManyArtisanInput | AvisCreateManyArtisanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SignalementCreateWithoutArtisanInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demande?: DemandeCreateNestedOneWithoutSignalementInput
+    client: UserCreateNestedOneWithoutSignalementsInput
+  }
+
+  export type SignalementUncheckedCreateWithoutArtisanInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
+    clientId: string
+  }
+
+  export type SignalementCreateOrConnectWithoutArtisanInput = {
+    where: SignalementWhereUniqueInput
+    create: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput>
+  }
+
+  export type SignalementCreateManyArtisanInputEnvelope = {
+    data: SignalementCreateManyArtisanInput | SignalementCreateManyArtisanInput[]
     skipDuplicates?: boolean
   }
 
@@ -7612,6 +11384,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     demandesClient?: DemandeUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutArtisanInput = {
@@ -7621,6 +11395,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     demandesClient?: DemandeUncheckedUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUncheckedUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type DemandeUpsertWithWhereUniqueWithoutArtisanInput = {
@@ -7639,6 +11415,38 @@ export namespace Prisma {
     data: XOR<DemandeUpdateManyMutationInput, DemandeUncheckedUpdateManyWithoutArtisanInput>
   }
 
+  export type AvisUpsertWithWhereUniqueWithoutArtisanInput = {
+    where: AvisWhereUniqueInput
+    update: XOR<AvisUpdateWithoutArtisanInput, AvisUncheckedUpdateWithoutArtisanInput>
+    create: XOR<AvisCreateWithoutArtisanInput, AvisUncheckedCreateWithoutArtisanInput>
+  }
+
+  export type AvisUpdateWithWhereUniqueWithoutArtisanInput = {
+    where: AvisWhereUniqueInput
+    data: XOR<AvisUpdateWithoutArtisanInput, AvisUncheckedUpdateWithoutArtisanInput>
+  }
+
+  export type AvisUpdateManyWithWhereWithoutArtisanInput = {
+    where: AvisScalarWhereInput
+    data: XOR<AvisUpdateManyMutationInput, AvisUncheckedUpdateManyWithoutArtisanInput>
+  }
+
+  export type SignalementUpsertWithWhereUniqueWithoutArtisanInput = {
+    where: SignalementWhereUniqueInput
+    update: XOR<SignalementUpdateWithoutArtisanInput, SignalementUncheckedUpdateWithoutArtisanInput>
+    create: XOR<SignalementCreateWithoutArtisanInput, SignalementUncheckedCreateWithoutArtisanInput>
+  }
+
+  export type SignalementUpdateWithWhereUniqueWithoutArtisanInput = {
+    where: SignalementWhereUniqueInput
+    data: XOR<SignalementUpdateWithoutArtisanInput, SignalementUncheckedUpdateWithoutArtisanInput>
+  }
+
+  export type SignalementUpdateManyWithWhereWithoutArtisanInput = {
+    where: SignalementScalarWhereInput
+    data: XOR<SignalementUpdateManyMutationInput, SignalementUncheckedUpdateManyWithoutArtisanInput>
+  }
+
   export type UserCreateWithoutDemandesClientInput = {
     id?: string
     phone: string
@@ -7646,6 +11454,8 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     artisan?: ArtisanCreateNestedOneWithoutUserInput
+    avisDonnes?: AvisCreateNestedManyWithoutClientInput
+    signalements?: SignalementCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutDemandesClientInput = {
@@ -7655,6 +11465,8 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     artisan?: ArtisanUncheckedCreateNestedOneWithoutUserInput
+    avisDonnes?: AvisUncheckedCreateNestedManyWithoutClientInput
+    signalements?: SignalementUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutDemandesClientInput = {
@@ -7673,6 +11485,8 @@ export namespace Prisma {
     soldeKobo?: number
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutArtisanInput
+    avisRecus?: AvisCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanUncheckedCreateWithoutDemandesInput = {
@@ -7686,11 +11500,61 @@ export namespace Prisma {
     experience?: number
     soldeKobo?: number
     createdAt?: Date | string
+    avisRecus?: AvisUncheckedCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementUncheckedCreateNestedManyWithoutArtisanInput
   }
 
   export type ArtisanCreateOrConnectWithoutDemandesInput = {
     where: ArtisanWhereUniqueInput
     create: XOR<ArtisanCreateWithoutDemandesInput, ArtisanUncheckedCreateWithoutDemandesInput>
+  }
+
+  export type AvisCreateWithoutDemandeInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    artisan: ArtisanCreateNestedOneWithoutAvisRecusInput
+    client: UserCreateNestedOneWithoutAvisDonnesInput
+  }
+
+  export type AvisUncheckedCreateWithoutDemandeInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    artisanId: string
+    clientId: string
+  }
+
+  export type AvisCreateOrConnectWithoutDemandeInput = {
+    where: AvisWhereUniqueInput
+    create: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+  }
+
+  export type SignalementCreateWithoutDemandeInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    artisan: ArtisanCreateNestedOneWithoutSignalementsRecusInput
+    client: UserCreateNestedOneWithoutSignalementsInput
+  }
+
+  export type SignalementUncheckedCreateWithoutDemandeInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    artisanId: string
+    clientId: string
+  }
+
+  export type SignalementCreateOrConnectWithoutDemandeInput = {
+    where: SignalementWhereUniqueInput
+    create: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
   }
 
   export type UserUpsertWithoutDemandesClientInput = {
@@ -7711,6 +11575,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisan?: ArtisanUpdateOneWithoutUserNestedInput
+    avisDonnes?: AvisUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDemandesClientInput = {
@@ -7720,6 +11586,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisan?: ArtisanUncheckedUpdateOneWithoutUserNestedInput
+    avisDonnes?: AvisUncheckedUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ArtisanUpsertWithoutDemandesInput = {
@@ -7744,6 +11612,8 @@ export namespace Prisma {
     soldeKobo?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutArtisanNestedInput
+    avisRecus?: AvisUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUpdateManyWithoutArtisanNestedInput
   }
 
   export type ArtisanUncheckedUpdateWithoutDemandesInput = {
@@ -7757,6 +11627,484 @@ export namespace Prisma {
     experience?: IntFieldUpdateOperationsInput | number
     soldeKobo?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avisRecus?: AvisUncheckedUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUncheckedUpdateManyWithoutArtisanNestedInput
+  }
+
+  export type AvisUpsertWithoutDemandeInput = {
+    update: XOR<AvisUpdateWithoutDemandeInput, AvisUncheckedUpdateWithoutDemandeInput>
+    create: XOR<AvisCreateWithoutDemandeInput, AvisUncheckedCreateWithoutDemandeInput>
+    where?: AvisWhereInput
+  }
+
+  export type AvisUpdateToOneWithWhereWithoutDemandeInput = {
+    where?: AvisWhereInput
+    data: XOR<AvisUpdateWithoutDemandeInput, AvisUncheckedUpdateWithoutDemandeInput>
+  }
+
+  export type AvisUpdateWithoutDemandeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUpdateOneRequiredWithoutAvisRecusNestedInput
+    client?: UserUpdateOneRequiredWithoutAvisDonnesNestedInput
+  }
+
+  export type AvisUncheckedUpdateWithoutDemandeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementUpsertWithoutDemandeInput = {
+    update: XOR<SignalementUpdateWithoutDemandeInput, SignalementUncheckedUpdateWithoutDemandeInput>
+    create: XOR<SignalementCreateWithoutDemandeInput, SignalementUncheckedCreateWithoutDemandeInput>
+    where?: SignalementWhereInput
+  }
+
+  export type SignalementUpdateToOneWithWhereWithoutDemandeInput = {
+    where?: SignalementWhereInput
+    data: XOR<SignalementUpdateWithoutDemandeInput, SignalementUncheckedUpdateWithoutDemandeInput>
+  }
+
+  export type SignalementUpdateWithoutDemandeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUpdateOneRequiredWithoutSignalementsRecusNestedInput
+    client?: UserUpdateOneRequiredWithoutSignalementsNestedInput
+  }
+
+  export type SignalementUncheckedUpdateWithoutDemandeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DemandeCreateWithoutAvisInput = {
+    id?: string
+    metier: $Enums.Metier
+    description: string
+    commune: string
+    adresse: string
+    statut?: $Enums.StatutDemande
+    prixDevis?: number | null
+    createdAt?: Date | string
+    client: UserCreateNestedOneWithoutDemandesClientInput
+    artisan?: ArtisanCreateNestedOneWithoutDemandesInput
+    signalement?: SignalementCreateNestedOneWithoutDemandeInput
+  }
+
+  export type DemandeUncheckedCreateWithoutAvisInput = {
+    id?: string
+    metier: $Enums.Metier
+    description: string
+    commune: string
+    adresse: string
+    statut?: $Enums.StatutDemande
+    prixDevis?: number | null
+    createdAt?: Date | string
+    clientId: string
+    artisanId?: string | null
+    signalement?: SignalementUncheckedCreateNestedOneWithoutDemandeInput
+  }
+
+  export type DemandeCreateOrConnectWithoutAvisInput = {
+    where: DemandeWhereUniqueInput
+    create: XOR<DemandeCreateWithoutAvisInput, DemandeUncheckedCreateWithoutAvisInput>
+  }
+
+  export type ArtisanCreateWithoutAvisRecusInput = {
+    id?: string
+    metiers?: ArtisanCreatemetiersInput | $Enums.Metier[]
+    commune: string
+    verifie?: boolean
+    note?: number
+    nbAvis?: number
+    experience?: number
+    soldeKobo?: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutArtisanInput
+    demandes?: DemandeCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementCreateNestedManyWithoutArtisanInput
+  }
+
+  export type ArtisanUncheckedCreateWithoutAvisRecusInput = {
+    id?: string
+    userId: string
+    metiers?: ArtisanCreatemetiersInput | $Enums.Metier[]
+    commune: string
+    verifie?: boolean
+    note?: number
+    nbAvis?: number
+    experience?: number
+    soldeKobo?: number
+    createdAt?: Date | string
+    demandes?: DemandeUncheckedCreateNestedManyWithoutArtisanInput
+    signalementsRecus?: SignalementUncheckedCreateNestedManyWithoutArtisanInput
+  }
+
+  export type ArtisanCreateOrConnectWithoutAvisRecusInput = {
+    where: ArtisanWhereUniqueInput
+    create: XOR<ArtisanCreateWithoutAvisRecusInput, ArtisanUncheckedCreateWithoutAvisRecusInput>
+  }
+
+  export type UserCreateWithoutAvisDonnesInput = {
+    id?: string
+    phone: string
+    name: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    artisan?: ArtisanCreateNestedOneWithoutUserInput
+    demandesClient?: DemandeCreateNestedManyWithoutClientInput
+    signalements?: SignalementCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutAvisDonnesInput = {
+    id?: string
+    phone: string
+    name: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    artisan?: ArtisanUncheckedCreateNestedOneWithoutUserInput
+    demandesClient?: DemandeUncheckedCreateNestedManyWithoutClientInput
+    signalements?: SignalementUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutAvisDonnesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAvisDonnesInput, UserUncheckedCreateWithoutAvisDonnesInput>
+  }
+
+  export type DemandeUpsertWithoutAvisInput = {
+    update: XOR<DemandeUpdateWithoutAvisInput, DemandeUncheckedUpdateWithoutAvisInput>
+    create: XOR<DemandeCreateWithoutAvisInput, DemandeUncheckedCreateWithoutAvisInput>
+    where?: DemandeWhereInput
+  }
+
+  export type DemandeUpdateToOneWithWhereWithoutAvisInput = {
+    where?: DemandeWhereInput
+    data: XOR<DemandeUpdateWithoutAvisInput, DemandeUncheckedUpdateWithoutAvisInput>
+  }
+
+  export type DemandeUpdateWithoutAvisInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metier?: EnumMetierFieldUpdateOperationsInput | $Enums.Metier
+    description?: StringFieldUpdateOperationsInput | string
+    commune?: StringFieldUpdateOperationsInput | string
+    adresse?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutDemandeFieldUpdateOperationsInput | $Enums.StatutDemande
+    prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneRequiredWithoutDemandesClientNestedInput
+    artisan?: ArtisanUpdateOneWithoutDemandesNestedInput
+    signalement?: SignalementUpdateOneWithoutDemandeNestedInput
+  }
+
+  export type DemandeUncheckedUpdateWithoutAvisInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metier?: EnumMetierFieldUpdateOperationsInput | $Enums.Metier
+    description?: StringFieldUpdateOperationsInput | string
+    commune?: StringFieldUpdateOperationsInput | string
+    adresse?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutDemandeFieldUpdateOperationsInput | $Enums.StatutDemande
+    prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    artisanId?: NullableStringFieldUpdateOperationsInput | string | null
+    signalement?: SignalementUncheckedUpdateOneWithoutDemandeNestedInput
+  }
+
+  export type ArtisanUpsertWithoutAvisRecusInput = {
+    update: XOR<ArtisanUpdateWithoutAvisRecusInput, ArtisanUncheckedUpdateWithoutAvisRecusInput>
+    create: XOR<ArtisanCreateWithoutAvisRecusInput, ArtisanUncheckedCreateWithoutAvisRecusInput>
+    where?: ArtisanWhereInput
+  }
+
+  export type ArtisanUpdateToOneWithWhereWithoutAvisRecusInput = {
+    where?: ArtisanWhereInput
+    data: XOR<ArtisanUpdateWithoutAvisRecusInput, ArtisanUncheckedUpdateWithoutAvisRecusInput>
+  }
+
+  export type ArtisanUpdateWithoutAvisRecusInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metiers?: ArtisanUpdatemetiersInput | $Enums.Metier[]
+    commune?: StringFieldUpdateOperationsInput | string
+    verifie?: BoolFieldUpdateOperationsInput | boolean
+    note?: FloatFieldUpdateOperationsInput | number
+    nbAvis?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    soldeKobo?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutArtisanNestedInput
+    demandes?: DemandeUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUpdateManyWithoutArtisanNestedInput
+  }
+
+  export type ArtisanUncheckedUpdateWithoutAvisRecusInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    metiers?: ArtisanUpdatemetiersInput | $Enums.Metier[]
+    commune?: StringFieldUpdateOperationsInput | string
+    verifie?: BoolFieldUpdateOperationsInput | boolean
+    note?: FloatFieldUpdateOperationsInput | number
+    nbAvis?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    soldeKobo?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandes?: DemandeUncheckedUpdateManyWithoutArtisanNestedInput
+    signalementsRecus?: SignalementUncheckedUpdateManyWithoutArtisanNestedInput
+  }
+
+  export type UserUpsertWithoutAvisDonnesInput = {
+    update: XOR<UserUpdateWithoutAvisDonnesInput, UserUncheckedUpdateWithoutAvisDonnesInput>
+    create: XOR<UserCreateWithoutAvisDonnesInput, UserUncheckedCreateWithoutAvisDonnesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAvisDonnesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAvisDonnesInput, UserUncheckedUpdateWithoutAvisDonnesInput>
+  }
+
+  export type UserUpdateWithoutAvisDonnesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUpdateOneWithoutUserNestedInput
+    demandesClient?: DemandeUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAvisDonnesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUncheckedUpdateOneWithoutUserNestedInput
+    demandesClient?: DemandeUncheckedUpdateManyWithoutClientNestedInput
+    signalements?: SignalementUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type DemandeCreateWithoutSignalementInput = {
+    id?: string
+    metier: $Enums.Metier
+    description: string
+    commune: string
+    adresse: string
+    statut?: $Enums.StatutDemande
+    prixDevis?: number | null
+    createdAt?: Date | string
+    client: UserCreateNestedOneWithoutDemandesClientInput
+    artisan?: ArtisanCreateNestedOneWithoutDemandesInput
+    avis?: AvisCreateNestedOneWithoutDemandeInput
+  }
+
+  export type DemandeUncheckedCreateWithoutSignalementInput = {
+    id?: string
+    metier: $Enums.Metier
+    description: string
+    commune: string
+    adresse: string
+    statut?: $Enums.StatutDemande
+    prixDevis?: number | null
+    createdAt?: Date | string
+    clientId: string
+    artisanId?: string | null
+    avis?: AvisUncheckedCreateNestedOneWithoutDemandeInput
+  }
+
+  export type DemandeCreateOrConnectWithoutSignalementInput = {
+    where: DemandeWhereUniqueInput
+    create: XOR<DemandeCreateWithoutSignalementInput, DemandeUncheckedCreateWithoutSignalementInput>
+  }
+
+  export type ArtisanCreateWithoutSignalementsRecusInput = {
+    id?: string
+    metiers?: ArtisanCreatemetiersInput | $Enums.Metier[]
+    commune: string
+    verifie?: boolean
+    note?: number
+    nbAvis?: number
+    experience?: number
+    soldeKobo?: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutArtisanInput
+    demandes?: DemandeCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisCreateNestedManyWithoutArtisanInput
+  }
+
+  export type ArtisanUncheckedCreateWithoutSignalementsRecusInput = {
+    id?: string
+    userId: string
+    metiers?: ArtisanCreatemetiersInput | $Enums.Metier[]
+    commune: string
+    verifie?: boolean
+    note?: number
+    nbAvis?: number
+    experience?: number
+    soldeKobo?: number
+    createdAt?: Date | string
+    demandes?: DemandeUncheckedCreateNestedManyWithoutArtisanInput
+    avisRecus?: AvisUncheckedCreateNestedManyWithoutArtisanInput
+  }
+
+  export type ArtisanCreateOrConnectWithoutSignalementsRecusInput = {
+    where: ArtisanWhereUniqueInput
+    create: XOR<ArtisanCreateWithoutSignalementsRecusInput, ArtisanUncheckedCreateWithoutSignalementsRecusInput>
+  }
+
+  export type UserCreateWithoutSignalementsInput = {
+    id?: string
+    phone: string
+    name: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    artisan?: ArtisanCreateNestedOneWithoutUserInput
+    demandesClient?: DemandeCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutSignalementsInput = {
+    id?: string
+    phone: string
+    name: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    artisan?: ArtisanUncheckedCreateNestedOneWithoutUserInput
+    demandesClient?: DemandeUncheckedCreateNestedManyWithoutClientInput
+    avisDonnes?: AvisUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutSignalementsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSignalementsInput, UserUncheckedCreateWithoutSignalementsInput>
+  }
+
+  export type DemandeUpsertWithoutSignalementInput = {
+    update: XOR<DemandeUpdateWithoutSignalementInput, DemandeUncheckedUpdateWithoutSignalementInput>
+    create: XOR<DemandeCreateWithoutSignalementInput, DemandeUncheckedCreateWithoutSignalementInput>
+    where?: DemandeWhereInput
+  }
+
+  export type DemandeUpdateToOneWithWhereWithoutSignalementInput = {
+    where?: DemandeWhereInput
+    data: XOR<DemandeUpdateWithoutSignalementInput, DemandeUncheckedUpdateWithoutSignalementInput>
+  }
+
+  export type DemandeUpdateWithoutSignalementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metier?: EnumMetierFieldUpdateOperationsInput | $Enums.Metier
+    description?: StringFieldUpdateOperationsInput | string
+    commune?: StringFieldUpdateOperationsInput | string
+    adresse?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutDemandeFieldUpdateOperationsInput | $Enums.StatutDemande
+    prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneRequiredWithoutDemandesClientNestedInput
+    artisan?: ArtisanUpdateOneWithoutDemandesNestedInput
+    avis?: AvisUpdateOneWithoutDemandeNestedInput
+  }
+
+  export type DemandeUncheckedUpdateWithoutSignalementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metier?: EnumMetierFieldUpdateOperationsInput | $Enums.Metier
+    description?: StringFieldUpdateOperationsInput | string
+    commune?: StringFieldUpdateOperationsInput | string
+    adresse?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutDemandeFieldUpdateOperationsInput | $Enums.StatutDemande
+    prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    artisanId?: NullableStringFieldUpdateOperationsInput | string | null
+    avis?: AvisUncheckedUpdateOneWithoutDemandeNestedInput
+  }
+
+  export type ArtisanUpsertWithoutSignalementsRecusInput = {
+    update: XOR<ArtisanUpdateWithoutSignalementsRecusInput, ArtisanUncheckedUpdateWithoutSignalementsRecusInput>
+    create: XOR<ArtisanCreateWithoutSignalementsRecusInput, ArtisanUncheckedCreateWithoutSignalementsRecusInput>
+    where?: ArtisanWhereInput
+  }
+
+  export type ArtisanUpdateToOneWithWhereWithoutSignalementsRecusInput = {
+    where?: ArtisanWhereInput
+    data: XOR<ArtisanUpdateWithoutSignalementsRecusInput, ArtisanUncheckedUpdateWithoutSignalementsRecusInput>
+  }
+
+  export type ArtisanUpdateWithoutSignalementsRecusInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    metiers?: ArtisanUpdatemetiersInput | $Enums.Metier[]
+    commune?: StringFieldUpdateOperationsInput | string
+    verifie?: BoolFieldUpdateOperationsInput | boolean
+    note?: FloatFieldUpdateOperationsInput | number
+    nbAvis?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    soldeKobo?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutArtisanNestedInput
+    demandes?: DemandeUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUpdateManyWithoutArtisanNestedInput
+  }
+
+  export type ArtisanUncheckedUpdateWithoutSignalementsRecusInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    metiers?: ArtisanUpdatemetiersInput | $Enums.Metier[]
+    commune?: StringFieldUpdateOperationsInput | string
+    verifie?: BoolFieldUpdateOperationsInput | boolean
+    note?: FloatFieldUpdateOperationsInput | number
+    nbAvis?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    soldeKobo?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandes?: DemandeUncheckedUpdateManyWithoutArtisanNestedInput
+    avisRecus?: AvisUncheckedUpdateManyWithoutArtisanNestedInput
+  }
+
+  export type UserUpsertWithoutSignalementsInput = {
+    update: XOR<UserUpdateWithoutSignalementsInput, UserUncheckedUpdateWithoutSignalementsInput>
+    create: XOR<UserCreateWithoutSignalementsInput, UserUncheckedCreateWithoutSignalementsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSignalementsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSignalementsInput, UserUncheckedUpdateWithoutSignalementsInput>
+  }
+
+  export type UserUpdateWithoutSignalementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUpdateOneWithoutUserNestedInput
+    demandesClient?: DemandeUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSignalementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    artisan?: ArtisanUncheckedUpdateOneWithoutUserNestedInput
+    demandesClient?: DemandeUncheckedUpdateManyWithoutClientNestedInput
+    avisDonnes?: AvisUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type DemandeCreateManyClientInput = {
@@ -7771,6 +12119,25 @@ export namespace Prisma {
     artisanId?: string | null
   }
 
+  export type AvisCreateManyClientInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    artisanId: string
+  }
+
+  export type SignalementCreateManyClientInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
+    artisanId: string
+  }
+
   export type DemandeUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     metier?: EnumMetierFieldUpdateOperationsInput | $Enums.Metier
@@ -7781,6 +12148,8 @@ export namespace Prisma {
     prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisan?: ArtisanUpdateOneWithoutDemandesNestedInput
+    avis?: AvisUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeUncheckedUpdateWithoutClientInput = {
@@ -7793,6 +12162,8 @@ export namespace Prisma {
     prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     artisanId?: NullableStringFieldUpdateOperationsInput | string | null
+    avis?: AvisUncheckedUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUncheckedUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeUncheckedUpdateManyWithoutClientInput = {
@@ -7807,6 +12178,63 @@ export namespace Prisma {
     artisanId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type AvisUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneRequiredWithoutAvisNestedInput
+    artisan?: ArtisanUpdateOneRequiredWithoutAvisRecusNestedInput
+  }
+
+  export type AvisUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AvisUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    artisanId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneWithoutSignalementNestedInput
+    artisan?: ArtisanUpdateOneRequiredWithoutSignalementsRecusNestedInput
+  }
+
+  export type SignalementUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
+    artisanId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
+    artisanId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DemandeCreateManyArtisanInput = {
     id?: string
     metier: $Enums.Metier
@@ -7816,6 +12244,25 @@ export namespace Prisma {
     statut?: $Enums.StatutDemande
     prixDevis?: number | null
     createdAt?: Date | string
+    clientId: string
+  }
+
+  export type AvisCreateManyArtisanInput = {
+    id?: string
+    note: number
+    commentaire?: string
+    createdAt?: Date | string
+    demandeId: string
+    clientId: string
+  }
+
+  export type SignalementCreateManyArtisanInput = {
+    id?: string
+    motif: $Enums.MotifSignalement
+    description?: string
+    statut?: $Enums.StatutSignalement
+    createdAt?: Date | string
+    demandeId?: string | null
     clientId: string
   }
 
@@ -7829,6 +12276,8 @@ export namespace Prisma {
     prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneRequiredWithoutDemandesClientNestedInput
+    avis?: AvisUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeUncheckedUpdateWithoutArtisanInput = {
@@ -7841,6 +12290,8 @@ export namespace Prisma {
     prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     clientId?: StringFieldUpdateOperationsInput | string
+    avis?: AvisUncheckedUpdateOneWithoutDemandeNestedInput
+    signalement?: SignalementUncheckedUpdateOneWithoutDemandeNestedInput
   }
 
   export type DemandeUncheckedUpdateManyWithoutArtisanInput = {
@@ -7852,6 +12303,63 @@ export namespace Prisma {
     statut?: EnumStatutDemandeFieldUpdateOperationsInput | $Enums.StatutDemande
     prixDevis?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AvisUpdateWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneRequiredWithoutAvisNestedInput
+    client?: UserUpdateOneRequiredWithoutAvisDonnesNestedInput
+  }
+
+  export type AvisUncheckedUpdateWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AvisUncheckedUpdateManyWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    note?: IntFieldUpdateOperationsInput | number
+    commentaire?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementUpdateWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demande?: DemandeUpdateOneWithoutSignalementNestedInput
+    client?: UserUpdateOneRequiredWithoutSignalementsNestedInput
+  }
+
+  export type SignalementUncheckedUpdateWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignalementUncheckedUpdateManyWithoutArtisanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    motif?: EnumMotifSignalementFieldUpdateOperationsInput | $Enums.MotifSignalement
+    description?: StringFieldUpdateOperationsInput | string
+    statut?: EnumStatutSignalementFieldUpdateOperationsInput | $Enums.StatutSignalement
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    demandeId?: NullableStringFieldUpdateOperationsInput | string | null
     clientId?: StringFieldUpdateOperationsInput | string
   }
 

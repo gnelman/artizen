@@ -3,7 +3,7 @@
 import { prisma } from "./prisma";
 import { creerSession } from "./session";
 
-// Génère un code à 6 chiffres, le range en base, et (pour l'instant) le renvoie
+// Génère un code à 6 chiffres, le range en base
 export async function envoyerCode(phone: string) {
   const numero = phone.trim();
 
@@ -23,11 +23,10 @@ export async function envoyerCode(phone: string) {
   return { ok: true, message: "Code envoyé" };
 }
 
-// Vérifie le code saisi et connecte l'utilisateur (le crée s'il n'existe pas)
+// Vérifie le code, connecte l'utilisateur, signale si c'est un nouveau compte
 export async function verifierCode(phone: string, code: string) {
   const numero = phone.trim();
 
-  // cherche le dernier code généré pour ce numéro
   const dernierCode = await prisma.codeVerif.findFirst({
     where: { phone: numero },
     orderBy: { createdAt: "desc" },
@@ -45,17 +44,43 @@ export async function verifierCode(phone: string, code: string) {
     return { ok: false, message: "Code incorrect" };
   }
 
-  // code bon : on récupère l'utilisateur, ou on le crée si c'est sa première fois
+  // le code est bon : compte existant ou nouveau ?
   let user = await prisma.user.findUnique({ where: { phone: numero } });
+  let nouveau = false;
 
   if (!user) {
     user = await prisma.user.create({
       data: { phone: numero, name: "Nouveau client" },
     });
+    nouveau = true;
   }
 
-  // on nettoie les codes utilisés pour ce numéro
+  // on nettoie les codes utilisés
   await prisma.codeVerif.deleteMany({ where: { phone: numero } });
+
   await creerSession(user.id);
-  return { ok: true, message: "Connecté", userId: user.id, role: user.role };
+
+  return {
+    ok: true,
+    message: "Connecté",
+    userId: user.id,
+    role: user.role,
+    nouveau, // true si le compte vient d'être créé
+  };
+}
+
+// Enregistre le nom d'un nouvel utilisateur
+export async function enregistrerNom(phone: string, nom: string) {
+  const numero = phone.trim();
+
+  if (!nom.trim()) {
+    return { ok: false, message: "Indique ton nom" };
+  }
+
+  await prisma.user.update({
+    where: { phone: numero },
+    data: { name: nom.trim() },
+  });
+
+  return { ok: true, message: "Nom enregistré" };
 }

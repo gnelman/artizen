@@ -1,84 +1,83 @@
 import { getUtilisateur } from "@/lib/session";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { deconnexion } from "@/lib/session";
+import { redirect } from "next/navigation";
+import CarteDemandeClient from "./CarteDemandeClient";
 
 export default async function Compte() {
   const user = await getUtilisateur();
 
-  return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#F6F7F5",
-        fontFamily: "system-ui, sans-serif",
-        padding: "24px",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: "360px" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: 800, color: "#0F6E72", margin: "0 0 20px" }}>
-          artizen<span style={{ color: "#F5A623" }}>.</span>
-        </h1>
+  if (!user) redirect("/connexion");
 
-        {user ? (
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #E6EAE9",
-              borderRadius: "16px",
-              padding: "24px",
-            }}
-          >
-            <p style={{ fontSize: "15px", color: "#67767A", margin: 0 }}>Tu es connecté 🎉</p>
-            <p style={{ fontSize: "20px", fontWeight: 700, color: "#1A2A36", margin: "8px 0 4px" }}>
-              {user.name}
-            </p>
-            <p style={{ fontSize: "15px", color: "#1A2A36", margin: 0 }}>{user.phone}</p>
-            <p
-              style={{
-                display: "inline-block",
-                marginTop: "14px",
-                background: "#DCEBEA",
-                color: "#0A4D50",
-                fontWeight: 700,
-                fontSize: "13px",
-                padding: "5px 12px",
-                borderRadius: "999px",
-              }}
-            >
-              Rôle : {user.role}
-            </p>
+  // les demandes du client, avec l'artisan et l'avis éventuel
+  const demandes = await prisma.demande.findMany({
+    where: { clientId: user.id },
+    orderBy: { createdAt: "desc" },
+    include: {
+      artisan: { include: { user: true } },
+      avis: true,
+    },
+  });
+
+  async function seDeconnecter() {
+    "use server";
+    await deconnexion();
+    redirect("/");
+  }
+
+  return (
+    <main className="min-h-screen bg-[#F6F7F5]">
+      <header className="bg-[#0F6E72] text-white px-5 pt-5 pb-6 rounded-b-3xl">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
+          <div>
+            <p className="text-[11px] tracking-widest text-[#9FE0DE] font-bold">MON ESPACE</p>
+            <h1 className="text-2xl font-extrabold mt-1">Bonjour, {user.name}</h1>
           </div>
-        ) : (
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #E6EAE9",
-              borderRadius: "16px",
-              padding: "24px",
-            }}
+          <Link
+            href="/"
+            className="bg-white/15 text-white text-sm font-bold px-4 py-2 rounded-xl"
           >
-            <p style={{ color: "#1A2A36", fontWeight: 600 }}>Tu n&apos;es pas connecté.</p>
+            + Demande
+          </Link>
+        </div>
+      </header>
+
+      <div className="max-w-2xl mx-auto px-5 py-5">
+        <h2 className="text-base font-bold text-[#1A2A36] mb-3.5">Mes demandes</h2>
+
+        {demandes.length === 0 ? (
+          <div className="bg-white border border-[#E6EAE9] rounded-2xl p-8 text-center">
+            <p className="text-[#67767A] mb-4">Tu n&apos;as pas encore de demande.</p>
             <Link
-              href="/connexion"
-              style={{
-                display: "inline-block",
-                marginTop: "12px",
-                background: "#0F6E72",
-                color: "#fff",
-                fontWeight: 700,
-                padding: "12px 20px",
-                borderRadius: "12px",
-                textDecoration: "none",
-              }}
+              href="/"
+              className="inline-block bg-[#0F6E72] text-white font-bold text-sm px-5 py-3 rounded-xl"
             >
-              Se connecter
+              Trouver un Artizen
             </Link>
           </div>
+        ) : (
+          demandes.map((d) => (
+            <CarteDemandeClient
+              key={d.id}
+              demande={{
+                id: d.id,
+                statut: d.statut,
+                metier: d.metier,
+                description: d.description,
+                prixDevis: d.prixDevis,
+                artisanNom: d.artisan?.user.name ?? "Artizen",
+                dejaNote: d.avis !== null,
+              }}
+            />
+          ))
         )}
+
+        <form action={seDeconnecter} className="mt-6 text-center">
+          <button type="submit" className="text-sm text-[#67767A] font-semibold">
+            Se déconnecter
+          </button>
+        </form>
       </div>
     </main>
   );
