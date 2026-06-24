@@ -17,61 +17,54 @@ export default async function ListeArtisans({
   const { metier } = await params;
   const label = labels[metier] ?? metier;
 
-  // on récupère les artizens vérifiés qui ont ce métier
   const artisans = await prisma.artisan.findMany({
-    where: {
-      verifie: true,
-      metiers: { has: metier as any },
-    },
+    where: { verifie: true, metiers: { has: metier as never } },
     include: { user: true },
     orderBy: { note: "desc" },
   });
 
   return (
-    <main style={{ minHeight: "100vh", background: "#F6F7F5", fontFamily: "system-ui, sans-serif" }}>
-      {/* En-tête */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E6EAE9", padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px" }}>
-        <Link href="/" style={{ textDecoration: "none", color: "#1A2A36", fontSize: "22px", fontWeight: 700 }}>←</Link>
-        <h1 style={{ fontSize: "18px", fontWeight: 700, margin: 0, color: "#1A2A36" }}>{label}</h1>
-      </div>
+    <main className="min-h-screen bg-[#F6F7F5]">
+      <header className="bg-white border-b border-[#E6EAE9] px-5 py-4 flex items-center gap-3 sticky top-0 z-10">
+        <Link href="/" className="text-[#1A2A36] text-2xl font-bold leading-none">
+          ←
+        </Link>
+        <h1 className="text-lg font-bold text-[#1A2A36]">{label}</h1>
+      </header>
 
-      <div style={{ maxWidth: "520px", margin: "0 auto", padding: "18px" }}>
-        <p style={{ fontSize: "13px", color: "#67767A", marginBottom: "14px" }}>
-          {artisans.length} Artizen{artisans.length > 1 ? "s" : ""} vérifié{artisans.length > 1 ? "s" : ""} près de toi
+      <div className="max-w-xl mx-auto px-5 py-5">
+        <p className="text-sm text-[#67767A] mb-4">
+          {artisans.length} Artizen{artisans.length > 1 ? "s" : ""} vérifié
+          {artisans.length > 1 ? "s" : ""} près de toi
         </p>
 
         {artisans.length === 0 ? (
-          <p style={{ color: "#67767A" }}>Aucun artizen disponible pour ce métier pour l&apos;instant.</p>
+          <p className="text-[#67767A]">
+            Aucun artizen disponible pour ce métier pour l&apos;instant.
+          </p>
         ) : (
           artisans.map((a) => (
             <Link
               key={a.id}
               href={`/artisan/${a.id}`}
-              style={{
-                display: "block",
-                background: "#fff",
-                border: "1px solid #E6EAE9",
-                borderRadius: "16px",
-                padding: "14px",
-                marginBottom: "12px",
-                textDecoration: "none",
-                color: "#1A2A36",
-              }}
+              className="block bg-white border border-[#E6EAE9] rounded-2xl p-4 mb-3 transition-all hover:border-[#0F6E72] hover:shadow-md active:scale-[0.99]"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "50px", height: "50px", borderRadius: "50%", background: "#0F6E72", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "17px", flex: "none" }}>
+              <div className="flex items-center gap-3">
+                <div className="w-13 h-13 rounded-full bg-[#0F6E72] text-white flex items-center justify-center font-bold text-lg shrink-0">
                   {a.user.name.substring(0, 2).toUpperCase()}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: "16px" }}>{a.user.name}</div>
-                  <div style={{ fontSize: "13px", color: "#67767A" }}>{a.commune}</div>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "5px", marginTop: "5px", background: "#0F6E72", color: "#fff", fontSize: "11px", fontWeight: 700, padding: "3px 8px", borderRadius: "999px" }}>
-                    ✓ Artizen Vérifié
+
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-base text-[#1A2A36]">{a.user.name}</div>
+                  <div className="text-sm text-[#67767A]">{a.commune}</div>
+                  <div className="inline-flex items-center gap-1 mt-1.5 bg-[#0F6E72] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
+                    <span>✓</span> Artizen Vérifié
                   </div>
                 </div>
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ color: "#F5A623", fontSize: "14px" }}>★ {a.note.toFixed(1)}</div>
-                  <div style={{ fontSize: "11px", color: "#67767A" }}>{a.nbAvis} avis</div>
+
+                <div className="text-right shrink-0">
+                  <div className="text-[#F5A623] text-sm font-bold">★ {a.note.toFixed(1)}</div>
+                  <div className="text-[11px] text-[#67767A]">{a.nbAvis} avis</div>
                 </div>
               </div>
             </Link>
