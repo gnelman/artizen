@@ -62,3 +62,18 @@ export async function retirerArtisan(userId: string) {
 
   return { ok: true, message: "Statut artisan retiré" };
 }
+
+// Marque un signalement comme traité
+export async function traiterSignalement(signalementId: string) {
+  const admin = await getUtilisateur();
+  if (!admin || admin.role !== "ADMIN") {
+    return { ok: false, message: "Non autorisé." };
+  }
+
+  await prisma.signalement.update({
+    where: { id: signalementId },
+    data: { statut: "TRAITE" },
+  });
+
+  return { ok: true, message: "Signalement traité" };
+}

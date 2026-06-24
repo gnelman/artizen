@@ -8,7 +8,8 @@ const statutStyle: Record<string, string> = {
   EN_ATTENTE: "bg-[#FFF4E0] text-[#D6860B]",
   ACCEPTEE: "bg-[#DCEBEA] text-[#0A4D50]",
   EN_COURS: "bg-[#DCEBEA] text-[#0A4D50]",
-  TERMINEE: "bg-[#E7F6EC] text-[#15803d]",
+  TERMINEE: "bg-[#FFF4E0] text-[#D6860B]",
+  CONFIRMEE: "bg-[#E7F6EC] text-[#15803d]",
   PAYEE: "bg-[#E7F6EC] text-[#15803d]",
   ANNULEE: "bg-[#F0F3F2] text-[#67767A]",
 };
@@ -17,7 +18,8 @@ const statutLabels: Record<string, string> = {
   EN_ATTENTE: "En attente",
   ACCEPTEE: "Acceptée",
   EN_COURS: "En cours",
-  TERMINEE: "Terminée",
+  TERMINEE: "Terminée — attente client",
+  CONFIRMEE: "Confirmée par le client",
   PAYEE: "Payée",
   ANNULEE: "Annulée",
 };
@@ -122,7 +124,11 @@ export default function CarteDemande({
         )}
 
         {demande.statut === "TERMINEE" && (
-          <p className="text-[13px] text-[#15803d] font-bold">✓ Travail terminé</p>
+          <p className="text-[13px] text-[#D6860B] font-bold">⏳ En attente de confirmation du client</p>
+        )}
+
+        {demande.statut === "CONFIRMEE" && (
+          <p className="text-[13px] text-[#15803d] font-bold">✓ Intervention confirmée par le client</p>
         )}
       </div>
     </div>
