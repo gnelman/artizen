@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 
 const labels: Record<string, string> = {
   CLIMATISATION: "Climatisation",
@@ -58,7 +59,7 @@ export default async function ListeArtisans({
                   <div className="font-bold text-base text-[#1A2A36]">{a.user.name}</div>
                   <div className="text-sm text-[#67767A]">{a.commune}</div>
                   <div className="inline-flex items-center gap-1 mt-1.5 bg-[#0F6E72] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
-                    <span>✓</span> Artizen Vérifié
+                    <ShieldCheck className="w-3 h-3" strokeWidth={2.5} /> Artizen Vérifié
                   </div>
                 </div>
 

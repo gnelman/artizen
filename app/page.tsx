@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { Snowflake, Droplet, Zap, Refrigerator, PaintRoller } from "lucide-react";
 
 const metiers = [
-  { cle: "CLIMATISATION", label: "Climatisation" },
-  { cle: "PLOMBERIE", label: "Plomberie" },
-  { cle: "ELECTRICITE", label: "Électricité" },
-  { cle: "ELECTROMENAGER", label: "Froid & Électroménager" },
-  { cle: "PEINTURE", label: "Peinture & Carrelage" },
+  { cle: "CLIMATISATION", label: "Climatisation", Icone: Snowflake },
+  { cle: "PLOMBERIE", label: "Plomberie", Icone: Droplet },
+  { cle: "ELECTRICITE", label: "Électricité", Icone: Zap },
+  { cle: "ELECTROMENAGER", label: "Froid & Électroménager", Icone: Refrigerator },
+  { cle: "PEINTURE", label: "Peinture & Carrelage", Icone: PaintRoller },
 ];
 
 const confiance = ["Artizens vérifiés", "Prix affichés", "Garantie Zen 30j"];
@@ -39,20 +40,23 @@ export default function Accueil() {
         </h2>
 
         <div className="grid grid-cols-2 gap-3">
-          {metiers.map((m) => (
-            <Link
-              key={m.cle}
-              href={`/artisans/${m.cle}`}
-              className="bg-white border border-[#E6EAE9] rounded-2xl p-5 flex flex-col items-center justify-center text-center min-h-[100px] transition-all hover:border-[#0F6E72] hover:shadow-md active:scale-[0.98]"
-            >
-              <span className="w-11 h-11 rounded-xl bg-[#DCEBEA] text-[#0F6E72] font-extrabold flex items-center justify-center mb-2">
-                {m.label.charAt(0)}
-              </span>
-              <span className="text-sm font-bold text-[#1A2A36] leading-tight">
-                {m.label}
-              </span>
-            </Link>
-          ))}
+          {metiers.map((m) => {
+            const Icone = m.Icone;
+            return (
+              <Link
+                key={m.cle}
+                href={`/artisans/${m.cle}`}
+                className="bg-white border border-[#E6EAE9] rounded-2xl p-5 flex flex-col items-center justify-center text-center min-h-[110px] transition-all hover:border-[#0F6E72] hover:shadow-md active:scale-[0.98]"
+              >
+                <span className="w-12 h-12 rounded-xl bg-[#DCEBEA] flex items-center justify-center mb-2.5">
+                  <Icone className="w-6 h-6 text-[#0F6E72]" strokeWidth={2} />
+                </span>
+                <span className="text-sm font-bold text-[#1A2A36] leading-tight">
+                  {m.label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         <div className="mt-8 text-center">
