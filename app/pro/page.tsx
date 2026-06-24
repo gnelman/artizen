@@ -1,23 +1,7 @@
 import { getUtilisateur } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-
-const metierLabels: Record<string, string> = {
-  CLIMATISATION: "Climatisation",
-  PLOMBERIE: "Plomberie",
-  ELECTRICITE: "Électricité",
-  ELECTROMENAGER: "Froid & Électroménager",
-  PEINTURE: "Peinture & Carrelage",
-};
-
-const statutLabels: Record<string, string> = {
-  EN_ATTENTE: "En attente",
-  ACCEPTEE: "Acceptée",
-  EN_COURS: "En cours",
-  TERMINEE: "Terminée",
-  PAYEE: "Payée",
-  ANNULEE: "Annulée",
-};
+import CarteDemande from "./CarteDemande";
 
 export default async function Pro() {
   const user = await getUtilisateur();
@@ -63,29 +47,19 @@ export default async function Pro() {
           <p style={{ color: "#67767A" }}>Aucune demande pour l&apos;instant.</p>
         ) : (
           demandes.map((d) => (
-            <div
+            <CarteDemande
               key={d.id}
-              style={{
-                background: "#fff",
-                border: "1px solid #E6EAE9",
-                borderRadius: "16px",
-                padding: "16px",
-                marginBottom: "12px",
-                borderLeft: d.statut === "EN_ATTENTE" ? "4px solid #F5A623" : "4px solid #E6EAE9",
+              demande={{
+                id: d.id,
+                statut: d.statut,
+                metier: d.metier,
+                commune: d.commune,
+                description: d.description,
+                adresse: d.adresse,
+                prixDevis: d.prixDevis,
+                clientNom: d.client.name,
               }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                <span style={{ fontWeight: 700, fontSize: "15px" }}>{d.client.name}</span>
-                <span style={{ fontSize: "11px", fontWeight: 700, padding: "3px 10px", borderRadius: "999px", background: "#DCEBEA", color: "#0A4D50" }}>
-                  {statutLabels[d.statut]}
-                </span>
-              </div>
-              <p style={{ margin: "0 0 6px", fontSize: "13px", color: "#67767A" }}>
-                {metierLabels[d.metier]} · {d.commune}
-              </p>
-              <p style={{ margin: 0, fontSize: "14px", color: "#1A2A36" }}>{d.description}</p>
-              <p style={{ margin: "8px 0 0", fontSize: "12px", color: "#67767A" }}>📍 {d.adresse}</p>
-            </div>
+            />
           ))
         )}
       </div>
